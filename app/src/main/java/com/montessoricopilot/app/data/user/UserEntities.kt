@@ -2,6 +2,7 @@ package com.montessoricopilot.app.data.user
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "children")
@@ -22,6 +23,11 @@ data class ChildEntity(
             onDelete = ForeignKey.CASCADE,
         )
     ],
+    // Indexed because childId is a foreign key AND every read filters on it
+    // ("all journal entries for this child"). Without the index, deleting a
+    // child forces a full table scan, and per-child queries get slower as the
+    // journal grows.
+    indices = [Index("childId")],
 )
 data class JournalEntryEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -41,6 +47,7 @@ data class JournalEntryEntity(
             onDelete = ForeignKey.CASCADE,
         )
     ],
+    indices = [Index("childId")],
 )
 data class ShelfItemEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -65,6 +72,7 @@ data class ShelfItemEntity(
             onDelete = ForeignKey.CASCADE,
         )
     ],
+    indices = [Index("childId")],
 )
 data class DismissedRecommendationEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,

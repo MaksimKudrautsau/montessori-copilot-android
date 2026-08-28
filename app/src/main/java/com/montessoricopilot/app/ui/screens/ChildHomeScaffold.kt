@@ -1,3 +1,8 @@
+// Material 3 still marks TopAppBar (and several other components) as
+// experimental. File-level opt-in rather than per-function, so adding another
+// M3 component to this screen later doesn't fail the build again.
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.montessoricopilot.app.ui.screens
 
 import androidx.compose.foundation.layout.padding
@@ -5,11 +10,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.List as ListIcon
 import androidx.compose.material.icons.filled.Inventory2
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -63,7 +68,7 @@ fun ChildHomeScaffold(
                             Icon(
                                 when (tab) {
                                     Tab.TODAY -> Icons.Filled.Home
-                                    Tab.LIBRARY -> ListIcon
+                                    Tab.LIBRARY -> Icons.Filled.List
                                     Tab.JOURNAL -> Icons.Filled.Book
                                     Tab.SHELF -> Icons.Filled.Inventory2
                                 },

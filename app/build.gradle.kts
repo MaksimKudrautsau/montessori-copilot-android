@@ -9,22 +9,30 @@ plugins {
 
 android {
     namespace = "com.montessoricopilot.app"
-    compileSdk = 35
+    // API 36 (Android 16). Google Play requires new apps and updates to
+    // target API 36 as of 31 Aug 2026, so 35 would not be publishable.
+    // compileSdk 36 requires AGP >= 8.9.1 (pinned in libs.versions.toml).
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.montessoricopilot.app"
         // Chaquopy requires minSdk >= 24; 26 keeps us on a modern, well-supported
         // baseline (Android 8.0+) while comfortably clearing that floor.
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "0.2.0"
 
         // Chaquopy needs to know which ABIs to bundle a Python interpreter for.
-        // Start with the two that cover the vast majority of real devices;
-        // add x86_64 if you also want emulator support without an ARM image.
+        // arm64-v8a  = every modern physical Android device (Play has required
+        //              64-bit since 2019; 32-bit armeabi-v7a is legacy and
+        //              Chaquopy's Python 3.12 is not built for it at all).
+        // x86_64     = the Android emulator on an Intel Mac / PC.
+        // Each ABI adds its own copy of the Python interpreter to the APK, so
+        // don't add more than you actually ship. An Apple-silicon Mac's
+        // emulator uses arm64-v8a and is already covered.
         ndk {
-            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+            abiFilters += listOf("arm64-v8a", "x86_64")
         }
     }
 
@@ -61,6 +69,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+// Both databases set exportSchema = true, which makes Room write a JSON
+// snapshot of each schema version here. Those snapshots are what let you
+// write real migration tests later (and diff what changed between versions),
+// so this directory is worth committing to git.
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 chaquopy {

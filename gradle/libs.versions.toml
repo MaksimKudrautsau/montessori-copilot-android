@@ -1,10 +1,24 @@
 [versions]
-# NOTE: pin these to whatever Android Studio's dependency-upgrade assistant
-# suggests when you first sync this project — they could not be verified
-# against Google's Maven repo from the sandbox that generated this scaffold
-# (see README "Known limitation"). These were current as of the Chaquopy
-# and AndroidX docs at the time of writing.
-agp = "8.7.2"
+# These versions are deliberately a CONSISTENT SET, not the newest of each.
+# Rationale: an older-but-real version always resolves from Maven, while a
+# guessed-too-new one fails the build outright. The sandbox that generated
+# this scaffold cannot reach Google's Maven or Maven Central, so anything
+# unverifiable was left at a known-consistent value.
+#
+# Verified against docs (Aug 2026):
+#   - agp 8.9.1 is the MINIMUM AGP that supports compileSdk 36, which
+#     Google Play now requires (see app/build.gradle.kts). 8.13 is the
+#     newest 8.x if you want to go further.
+#   - Chaquopy 17.0 supports AGP 7.3-9.2, so this is in range. Do NOT jump
+#     to AGP 9.3+ without checking Chaquopy first.
+#   - AGP 9.x is a breaking change (Kotlin plugin becomes built-in,
+#     `kotlinOptions` is replaced); this project's build files use AGP 8 DSL.
+#
+# When you first sync, let Android Studio's AGP Upgrade Assistant modernize
+# Kotlin/KSP/Compose together — it resolves that triple against live repos,
+# which is more reliable than pinning them by hand. KSP must always match
+# the Kotlin version exactly.
+agp = "8.9.1"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.28"
 chaquopy = "17.0.0"
