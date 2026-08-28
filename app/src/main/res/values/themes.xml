@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose owns theming (see ui/theme/Theme.kt); this base style just
+         needs to exist for the manifest and avoid a system default flash. -->
+    <style name="Theme.MontessoriCopilot" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

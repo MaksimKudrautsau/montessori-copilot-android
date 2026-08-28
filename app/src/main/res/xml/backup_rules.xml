@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Back up the writable user-data database (children, journal, shelf) via
+     Android Auto Backup. The prepackaged, read-only content.db is excluded
+     since it ships with every app install anyway and would just waste quota. -->
+<full-backup-content>
+    <include domain="database" path="userdata.db" />
+    <exclude domain="database" path="content.db" />
+</full-backup-content>

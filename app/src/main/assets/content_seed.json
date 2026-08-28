@@ -1,0 +1,309 @@
+{
+  "activities": [
+    {
+      "id": 1,
+      "title": "High-contrast mobile",
+      "description": "A simple black-and-white or high-contrast mobile hung within focal range above where the baby lies, to support early visual development.",
+      "ageMinMonths": 0,
+      "ageMaxMonths": 4,
+      "category": "sensory",
+      "materialsNeeded": "High-contrast mobile (e.g. Munari mobile), stand",
+      "preparedEnvironmentTips": "Hang at roughly 20-30cm from the baby's face, not directly over a crib mattress if unsupervised."
+    },
+    {
+      "id": 2,
+      "title": "Topponcino handling",
+      "description": "Using a small, firm pillow (topponcino) to move and hold a newborn gently and consistently, supporting the baby's sense of security.",
+      "ageMinMonths": 0,
+      "ageMaxMonths": 3,
+      "category": "practical_life",
+      "materialsNeeded": "Topponcino (firm, flat baby pillow)",
+      "preparedEnvironmentTips": "Keep it consistently in the same spot near the changing/resting area."
+    },
+    {
+      "id": 3,
+      "title": "Ring on a ribbon (reach and grasp)",
+      "description": "A wooden ring hung at chest height, within reach, to invite intentional reaching, batting, and grasping.",
+      "ageMinMonths": 3,
+      "ageMaxMonths": 7,
+      "category": "fine_motor",
+      "materialsNeeded": "Wooden ring, ribbon, low stand or frame",
+      "preparedEnvironmentTips": "Position on a low mat, not a crib, so movement is unrestricted."
+    },
+    {
+      "id": 4,
+      "title": "Floor mat with mirror",
+      "description": "A firm, flat mat with an unbreakable mirror at floor level, encouraging tummy time, head lifting, and self-observation.",
+      "ageMinMonths": 3,
+      "ageMaxMonths": 9,
+      "category": "gross_motor",
+      "materialsNeeded": "Firm play mat, acrylic (unbreakable) wall mirror mounted low",
+      "preparedEnvironmentTips": "Mirror mounted securely at the child's eye level while lying or sitting."
+    },
+    {
+      "id": 5,
+      "title": "Object permanence box with tray",
+      "description": "A box with a hole where a ball is dropped in and disappears into a tray below, reinforced by retrieving it — supports the emerging understanding that objects continue to exist unseen.",
+      "ageMinMonths": 6,
+      "ageMaxMonths": 12,
+      "category": "sensory",
+      "materialsNeeded": "Object permanence box, small ball",
+      "preparedEnvironmentTips": "Present on a low shelf at the child's own height, not handed over each time."
+    },
+    {
+      "id": 6,
+      "title": "Treasure basket",
+      "description": "A low, sturdy basket of everyday natural-material objects (wooden spoon, pinecone, shell, fabric swatch) for open-ended sensory exploration while seated.",
+      "ageMinMonths": 6,
+      "ageMaxMonths": 14,
+      "category": "sensory",
+      "materialsNeeded": "Basket, 6-10 safe natural household objects",
+      "preparedEnvironmentTips": "Rotate objects periodically; supervise closely for choking hazards."
+    },
+    {
+      "id": 7,
+      "title": "Push/pull walker toy",
+      "description": "A sturdy, weighted push toy that supports early cruising and independent walking practice.",
+      "ageMinMonths": 9,
+      "ageMaxMonths": 16,
+      "category": "gross_motor",
+      "materialsNeeded": "Wooden push/pull walker toy",
+      "preparedEnvironmentTips": "Clear a straight, open path along low furniture the child can cruise along."
+    },
+    {
+      "id": 8,
+      "title": "Simple shape sorter",
+      "description": "A wooden box or cube with one or two shape cut-outs, refining hand-eye coordination and an early sense of order.",
+      "ageMinMonths": 10,
+      "ageMaxMonths": 18,
+      "category": "fine_motor",
+      "materialsNeeded": "1-2 hole wooden shape sorter",
+      "preparedEnvironmentTips": "Start with a single shape; add more shapes only once one is mastered."
+    },
+    {
+      "id": 9,
+      "title": "Pouring water, jug to jug",
+      "description": "Pouring a small amount of water between two small pitchers, building concentration, coordination, and independence.",
+      "ageMinMonths": 14,
+      "ageMaxMonths": 30,
+      "category": "practical_life",
+      "materialsNeeded": "Two small stainless-steel or glass pitchers, tray, sponge",
+      "preparedEnvironmentTips": "Set up on a low tray at a table the child can reach; a small towel nearby for spills."
+    },
+    {
+      "id": 10,
+      "title": "3-piece ring stacker",
+      "description": "Stacking a small number of graduated rings onto a post, refining grasp and an early sense of size sequencing.",
+      "ageMinMonths": 10,
+      "ageMaxMonths": 18,
+      "category": "fine_motor",
+      "materialsNeeded": "Wooden ring stacker (3 rings)",
+      "preparedEnvironmentTips": "Keep on the active low shelf at consistent placement."
+    },
+    {
+      "id": 11,
+      "title": "Naming real objects",
+      "description": "Naming everyday real objects (cup, spoon, shoe) clearly and consistently during daily routines, rather than relying on picture books alone at this age.",
+      "ageMinMonths": 10,
+      "ageMaxMonths": 24,
+      "category": "language",
+      "materialsNeeded": "None — everyday household objects",
+      "preparedEnvironmentTips": "Use the real word, not a diminutive substitute, so vocabulary is accurate from the start."
+    },
+    {
+      "id": 12,
+      "title": "Spooning dry beans between bowls",
+      "description": "Transferring dried beans or chickpeas from one small bowl to another with a spoon, refining wrist control and concentration.",
+      "ageMinMonths": 18,
+      "ageMaxMonths": 36,
+      "category": "practical_life",
+      "materialsNeeded": "Two small bowls, spoon, dried beans, tray",
+      "preparedEnvironmentTips": "Use a tray to contain spills; start with larger beans before smaller ones."
+    },
+    {
+      "id": 13,
+      "title": "Wiping up a spill",
+      "description": "A small sponge and bowl kept accessible so the child can independently wipe up their own spills as part of daily practical life.",
+      "ageMinMonths": 18,
+      "ageMaxMonths": 48,
+      "category": "practical_life",
+      "materialsNeeded": "Small sponge, small bowl or basin",
+      "preparedEnvironmentTips": "Keep the sponge station at the child's height near the eating/water area."
+    },
+    {
+      "id": 14,
+      "title": "Sorting by color",
+      "description": "Sorting a small set of objects into groups by a single quality (color), an early exercise in visual discrimination and classification.",
+      "ageMinMonths": 18,
+      "ageMaxMonths": 36,
+      "category": "sensory",
+      "materialsNeeded": "Small bowls, objects/pom-poms in 2-3 distinct colors",
+      "preparedEnvironmentTips": "Start with just two colors, add a third only once that's easy."
+    },
+    {
+      "id": 15,
+      "title": "Dressing frame: large buttons",
+      "description": "A frame with two fabric panels joined by large buttons, isolating and practicing the fastening motion used in dressing.",
+      "ageMinMonths": 24,
+      "ageMaxMonths": 48,
+      "category": "practical_life",
+      "materialsNeeded": "Button dressing frame",
+      "preparedEnvironmentTips": "Introduce one dressing frame type at a time (buttons, then zippers, then snaps)."
+    },
+    {
+      "id": 16,
+      "title": "Knobbed cylinder blocks",
+      "description": "Classic Montessori material: cylinders of varying diameter and/or height, removed and replaced into matching sockets, refining visual discrimination of dimension.",
+      "ageMinMonths": 30,
+      "ageMaxMonths": 60,
+      "category": "sensory",
+      "materialsNeeded": "Knobbed cylinder block (one of the four variations)",
+      "preparedEnvironmentTips": "Introduce one block at a time; work on a mat so pieces don't roll away."
+    },
+    {
+      "id": 17,
+      "title": "Pink tower",
+      "description": "Ten pink wooden cubes of graduated size, stacked largest to smallest, refining visual-spatial discrimination of size in three dimensions.",
+      "ageMinMonths": 30,
+      "ageMaxMonths": 60,
+      "category": "sensory",
+      "materialsNeeded": "Pink tower (10 cubes)",
+      "preparedEnvironmentTips": "Needs floor space to build; carry cubes with two hands, one at a time."
+    },
+    {
+      "id": 18,
+      "title": "Sandpaper letters",
+      "description": "Letters cut from sandpaper mounted on boards, traced with two fingers while saying the letter's sound, connecting the visual, tactile, and phonetic.",
+      "ageMinMonths": 36,
+      "ageMaxMonths": 54,
+      "category": "language",
+      "materialsNeeded": "Sandpaper letters set (lowercase, phonetic sounds)",
+      "preparedEnvironmentTips": "Introduce sounds, not letter names, in small groups of three."
+    },
+    {
+      "id": 19,
+      "title": "Care of a plant",
+      "description": "Watering, wiping leaves, and observing a real houseplant kept at the child's height, building responsibility and care for the environment.",
+      "ageMinMonths": 36,
+      "ageMaxMonths": 72,
+      "category": "practical_life",
+      "materialsNeeded": "Small watering can, a hardy houseplant at low height",
+      "preparedEnvironmentTips": "Choose a resilient plant so early over/under-watering isn't discouraging."
+    },
+    {
+      "id": 20,
+      "title": "Brown stair",
+      "description": "Ten wooden prisms graduated in thickness, arranged from thickest to thinnest, refining discrimination of a single dimension (width).",
+      "ageMinMonths": 36,
+      "ageMaxMonths": 60,
+      "category": "sensory",
+      "materialsNeeded": "Brown stair (10 prisms)",
+      "preparedEnvironmentTips": "Best on a floor mat; often paired with the pink tower once both are known."
+    },
+    {
+      "id": 21,
+      "title": "Moveable alphabet, simple words",
+      "description": "Building simple phonetic words with cut-out letters before handwriting is fluent, letting composition outpace the physical skill of writing.",
+      "ageMinMonths": 42,
+      "ageMaxMonths": 66,
+      "category": "language",
+      "materialsNeeded": "Moveable alphabet box, small objects/picture cards for simple 3-letter words",
+      "preparedEnvironmentTips": "Best introduced only after most sandpaper letter sounds are known."
+    },
+    {
+      "id": 22,
+      "title": "Number rods",
+      "description": "Ten rods of increasing length in alternating red/blue decimeter segments, connecting a physical quantity to a number name.",
+      "ageMinMonths": 48,
+      "ageMaxMonths": 72,
+      "category": "sensory",
+      "materialsNeeded": "Number rods (1-10)",
+      "preparedEnvironmentTips": "Needs a long, clear floor mat to lay all ten rods out."
+    },
+    {
+      "id": 23,
+      "title": "Table washing",
+      "description": "A full, ordered practical-life sequence — wetting, soaping, scrubbing, rinsing, drying a small table — combining many refined movements in one purposeful task.",
+      "ageMinMonths": 48,
+      "ageMaxMonths": 72,
+      "category": "practical_life",
+      "materialsNeeded": "Small basin, apron, brush, soap, sponge, drying cloth, small table",
+      "preparedEnvironmentTips": "Model the full sequence once, slowly, before inviting the child to try it independently."
+    },
+    {
+      "id": 24,
+      "title": "Metal insets, tracing and coloring",
+      "description": "Tracing geometric metal insets and filling them with colored pencil lines, building the pencil control needed for handwriting.",
+      "ageMinMonths": 42,
+      "ageMaxMonths": 66,
+      "category": "fine_motor",
+      "materialsNeeded": "Metal insets set, colored pencils, plain paper",
+      "preparedEnvironmentTips": "Encourage consistent line direction over speed or coverage."
+    }
+  ],
+  "sensitivePeriods": [
+    {
+      "id": 1,
+      "periodName": "Movement",
+      "description": "An intense drive to refine gross motor control — reaching, crawling, walking, climbing, and later fine coordination.",
+      "ageMinMonths": 0,
+      "ageMaxMonths": 48
+    },
+    {
+      "id": 2,
+      "periodName": "Language",
+      "description": "Rapid, largely effortless absorption of spoken (and later written) language; peaks in the first three years.",
+      "ageMinMonths": 0,
+      "ageMaxMonths": 72
+    },
+    {
+      "id": 3,
+      "periodName": "Order",
+      "description": "A strong preference for consistency and predictability in routines, sequences, and the placement of objects in the environment.",
+      "ageMinMonths": 12,
+      "ageMaxMonths": 48
+    },
+    {
+      "id": 4,
+      "periodName": "Small Objects",
+      "description": "Fascination with tiny details and small items, refining the pincer grasp and close visual attention.",
+      "ageMinMonths": 12,
+      "ageMaxMonths": 30
+    },
+    {
+      "id": 5,
+      "periodName": "Refinement of the Senses",
+      "description": "Heightened interest in comparing and classifying sensory qualities — size, color, texture, sound, weight.",
+      "ageMinMonths": 30,
+      "ageMaxMonths": 72
+    },
+    {
+      "id": 6,
+      "periodName": "Refinement of Movement",
+      "description": "Interest in precise, purposeful, sequenced physical actions rather than movement for its own sake.",
+      "ageMinMonths": 18,
+      "ageMaxMonths": 60
+    },
+    {
+      "id": 7,
+      "periodName": "Coordination of Movement",
+      "description": "Growing ability to combine multiple refined movements into a single purposeful task.",
+      "ageMinMonths": 24,
+      "ageMaxMonths": 60
+    },
+    {
+      "id": 8,
+      "periodName": "Independence",
+      "description": "A drive toward doing things for oneself — dressing, eating, cleaning up — often expressed as 'help me do it myself.'",
+      "ageMinMonths": 18,
+      "ageMaxMonths": 60
+    },
+    {
+      "id": 9,
+      "periodName": "Grace and Courtesy",
+      "description": "Interest in the social forms of a community — greetings, turn-taking, polite requests — through observation and repetition.",
+      "ageMinMonths": 30,
+      "ageMaxMonths": 72
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+# Lets `import logic...` resolve straight from the Chaquopy source dir,
+# without needing Android/Gradle to run these tests.
+pythonpath = ["app/src/main/python"]
+testpaths = ["tests"]

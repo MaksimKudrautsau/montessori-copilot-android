@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Placeholder launcher foreground: a simple leaf mark. Swap for real
+     brand artwork before shipping — this only exists so the project builds
+     with a valid launcher icon out of the box. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#6E8266"
+        android:pathData="M54,30 C70,30 82,42 82,58 C82,74 70,84 54,84 C54,68 54,50 54,30 Z" />
+    <path
+        android:fillColor="#B5654B"
+        android:pathData="M54,30 L54,84"
+        android:strokeColor="#B5654B"
+        android:strokeWidth="2" />
+</vector>
