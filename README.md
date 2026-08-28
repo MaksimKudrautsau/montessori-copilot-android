@@ -1,119 +1,255 @@
-# Montessori Copilot — Android App
+# Montessori Copilot — Android
 
-Implements design doc v0.2: native Kotlin/Compose UI, Python business logic
-embedded via Chaquopy, everything local (no AI, no backend, no accounts).
-See `brainstorm-v0.1.md` / `brainstorm-v0.2.md` in the project for the full
-design rationale.
+An offline Android app that helps parents apply the Montessori method at home:
+an age-banded activity library, a per-child observation journal, and a toy-shelf
+rotation tracker.
 
-## Known limitation: this was built in a sandbox with no Android SDK
+**No AI at runtime. No backend. No accounts. No network calls.** Everything is
+computed on-device from a bundled content library. See
+[Content provenance](#content-provenance) for the one important caveat to that.
 
-The environment that generated this scaffold has no Android SDK and cannot
-reach `dl.google.com` / `maven.google.com` (Google's Maven repo, required
-for AndroidX/Compose/Room/AGP). That means:
+Status: **builds and runs** on a physical Pixel and on an emulator (API 36).
 
-- **What *was* verified here**: the entire Python logic layer
-  (`app/src/main/python/logic`) — 19 passing `pytest` tests, plus a sanity
-  run of the recommendation engine against the real seed content across six
-  age points (see the session transcript). This code is genuinely correct,
-  not just plausible-looking.
-- **What was *not* verified**: the Kotlin/Gradle/Compose/Room code has never
-  been compiled. It was written carefully and cross-checked by hand (method
-  signatures, constructor argument order, imports), but the first `./gradlew
-  build` in Android Studio will likely surface a handful of small issues —
-  a missing import, a dependency version bump Android Studio suggests, etc.
-  Treat this as a strong first draft to compile and fix up, not
-  guaranteed-working code.
+---
 
-**To actually build it**: open this folder in Android Studio (Otter or
-newer) on a machine with normal internet access. It should offer to sync
-Gradle and suggest dependency updates — accept those, since the versions in
-`gradle/libs.versions.toml` were pinned from documentation, not resolved
-against Maven live (see the version note at the top of that file).
+## Content provenance
 
-## Project layout
+**Read this before showing the app to anyone else.**
+
+The 24 activities and 9 sensitive periods in `app/src/main/assets/content_seed.json`
+were **written by Claude (an AI model) from general knowledge of Montessori
+pedagogy.** They were not transcribed from, licensed from, or verified against
+any specific book, curriculum, or training material, and they have **not been
+reviewed by a certified Montessori guide** (AMI, AMS, or otherwise).
+
+What that means concretely:
+
+- The *materials* named are real and standard — Pink Tower, Brown Stair,
+  sandpaper letters, knobbed cylinder blocks, object permanence box, practical
+  life work, treasure baskets. These are well-established parts of the method.
+- The *age bands* are approximate. Sensitive-period ranges genuinely vary
+  between sources and between children; treat them as orientation, not
+  diagnosis.
+- The *descriptions and tips* are a synthesis, not quotations, and carry no
+  authority beyond that.
+
+Worth being explicit about the nuance, since "no AI" was a design goal: the
+**app contains no AI** — nothing at runtime calls a model, and no user data ever
+leaves the device. But the **seed content was AI-authored**, which is a
+different question and a real one, because this content is parenting advice.
+
+**Before distributing this app**, the content should be either reviewed by a
+trained Montessori educator, or rewritten against citable sources with proper
+attribution. Standard references in this space include Maria Montessori's own
+works (*The Absorbent Mind*, *The Discovery of the Child*) and modern
+practitioner books such as Simone Davies' *The Montessori Toddler*. Note that
+copying text from those is a licensing question, not just an attribution one.
+
+All content lives in one editable place — `tools/generate_content_seed.py` —
+specifically so it can be replaced wholesale without touching app code. See
+[Editing the content library](#editing-the-content-library).
+
+---
+
+## Building
+
+### Prerequisites
+
+- **Android Studio** (Otter or newer) with **Android SDK Platform 36** installed.
+  API 36 is required: Google Play has mandated `targetSdk 36` for new apps and
+  updates since 31 Aug 2026.
+- **JDK 17+.** Android Studio bundles one; you do not need a system JDK. For
+  command-line builds, point `JAVA_HOME` at the bundled runtime:
+
+  ```bash
+  echo 'export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"' >> ~/.zshrc
+  source ~/.zshrc
+  ```
+
+  Without this, `./gradlew` fails with *"Unable to locate a Java Runtime."*
+
+### Build and install
+
+```bash
+git clone <your-repo-url>
+cd montessori-app
+./gradlew assembleDebug     # compile
+./gradlew installDebug      # install to the connected device/emulator
+```
+
+Or open the project in Android Studio, pick a device, and press **Run** (⌃R).
+
+First build is slow (several minutes): Chaquopy downloads a Python interpreter,
+and `material-icons-extended` takes a while to dex. Later builds are ~30s.
+
+### Running on a physical device
+
+1. On the phone: Settings → About phone → tap **Build number** 7×.
+2. Settings → System → Developer options → enable **USB debugging**.
+3. Connect with a *data* USB-C cable (charge-only cables silently fail), accept
+   the debugging prompt, then verify: `adb devices`.
+4. `./gradlew installDebug`
+
+The debug build is signed with a local debug key — fine for your own devices,
+but it cannot be uploaded to Play. That needs a release build and a real signing
+key, which is not set up in this project yet.
+
+### Verified toolchain
+
+This combination is known to build successfully:
+
+| Component | Version | Notes |
+|---|---|---|
+| AGP | 8.9.1 | Minimum that supports `compileSdk 36` |
+| Gradle | 9.3 | Wrapper generated by Android Studio |
+| Kotlin | 2.0.21 | KSP must match exactly: `2.0.21-1.0.28` |
+| Compose BOM | 2024.12.01 | |
+| Room | 2.6.1 | |
+| Chaquopy | 17.0.0 | Python 3.12 |
+| compileSdk / targetSdk | 36 | minSdk 26 |
+| ABIs | `arm64-v8a`, `x86_64` | |
+
+**Two upgrade traps**, both of which will break the build:
+
+1. **Do not go past AGP 9.2.** Chaquopy 17 supports AGP 7.3–9.2 only. Android
+   Studio will offer AGP 9.3+; declining that prompt is correct. The safe
+   modernization target is **AGP 8.13** (newest 8.x, same DSL).
+2. **AGP 9.x is a breaking change** — the Kotlin plugin becomes built-in and
+   `kotlinOptions` is replaced by `compilerOptions`. This project's build files
+   use AGP 8 DSL and would need rewriting.
+
+If you do upgrade Kotlin, KSP must be bumped in lockstep — a mismatch fails at
+configuration time. Let Android Studio's AGP Upgrade Assistant move
+Kotlin/KSP/Compose together rather than editing versions by hand.
+
+### ABI note
+
+`abiFilters` is set to `arm64-v8a` (all modern physical devices) and `x86_64`
+(Intel-Mac / PC emulators). **`armeabi-v7a` must not be added** — Chaquopy has no
+Python 3.12 build for 32-bit ARM and the build fails outright. Each ABI bundles
+its own copy of the Python interpreter, so don't add ABIs you don't ship.
+
+---
+
+## Architecture
+
+```
+Android app (single APK, fully offline)
+├── Kotlin + Jetpack Compose (Material 3)   — all UI, navigation, theming
+├── Room                                    — two local SQLite databases
+│     content.db   read-only curated library, seeded once from assets JSON
+│     userdata.db  read/write: children, journal, shelf, dismissals
+├── WorkManager                             — (planned) rotation reminders
+└── Python 3.12 via Chaquopy                — all decision logic
+```
+
+**Why Python is in here at all:** the business logic — which activities to
+recommend, when a shelf item is stale — is pure functions with plain data in and
+out. That makes it unit-testable with `pytest` on a laptop in milliseconds, with
+no emulator, no Gradle, no Android. Kotlin owns persistence and UI; Python owns
+decisions; they meet at a JSON-string boundary (`logic/bridge.py` ↔
+`logic/PythonBridge.kt`).
+
+Python calls are blocking JNI calls, so both repositories that invoke them wrap
+the call in `withContext(Dispatchers.Default)` — never run them on the main
+thread.
+
+### Layout
 
 ```
 app/src/main/java/com/montessoricopilot/app/
-  MontessoriApp.kt, MainActivity.kt      — entry points
-  data/content/                          — Room: read-only curated content
-  data/user/                             — Room: read/write household data
-  data/repository/                       — the seam between UI and data/logic
-  logic/                                 — Kotlin<->Python bridge (Chaquopy)
-  ui/theme/, ui/navigation/, ui/screens/ — Compose UI
-  viewmodel/                             — one per screen
+  data/content/     Room: read-only curated content
+  data/user/        Room: read/write household data
+  data/repository/  the seam between UI and data/logic
+  logic/            Kotlin↔Python bridge + age arithmetic
+  ui/               theme, navigation, screens
+  viewmodel/        one per screen
 
-app/src/main/python/logic/               — pure-Python business logic
-  recommendation.py    — rule-based activity matching (no AI)
-  rotation.py           — shelf-rotation-due logic
-  category_period_map.py — activity category -> sensitive period lookup
-  bridge.py              — JSON-in/JSON-out entry points Kotlin calls
+app/src/main/python/logic/
+  recommendation.py       rule-based activity matching (no AI, no ML)
+  rotation.py             shelf-rotation-due logic
+  category_period_map.py  activity category → sensitive period lookup
+  bridge.py               JSON-in/JSON-out entry points Kotlin calls
 
-app/src/main/assets/content_seed.json    — the curated content library
-tools/generate_content_seed.py           — script that authors it
-tests/                                   — pytest suite for the Python logic
+app/src/main/assets/content_seed.json   the content library (generated)
+tools/generate_content_seed.py          the script that authors it
+tests/                                  pytest suite for the Python logic
 ```
 
-## Running the one thing that's fully verified
+**The repository layer is the seam for growth.** No screen or ViewModel touches
+Room or Python directly. Adding accounts or cloud sync later means introducing a
+remote data source behind the existing repository classes — not rewriting the UI.
+
+---
+
+## Testing
+
+The Python logic layer has a real test suite that runs standalone — no Android
+toolchain required:
 
 ```bash
-pip install pytest --break-system-packages   # or use a venv
-pytest tests/ -v
+pip install pytest
+pytest tests/ -v      # 19 tests
 ```
 
-All 19 tests should pass. To regenerate the content seed after editing
-`tools/generate_content_seed.py`:
+This is deliberately where the app's actual decision-making lives, so it's the
+highest-value test surface and the fastest feedback loop.
+
+Not yet covered: Room DAO/migration tests, and Compose UI tests. Room is
+configured to export schema JSON to `app/schemas/` (commit that directory) so
+migration tests are possible once there's a version 2.
+
+---
+
+## Editing the content library
+
+Do **not** hand-edit `content_seed.json`. Edit the `ACTIVITIES` and
+`SENSITIVE_PERIODS` lists in `tools/generate_content_seed.py`, then:
 
 ```bash
 python3 tools/generate_content_seed.py
 ```
 
-## Design decisions worth knowing about
+Categories must stay in sync with `CATEGORY_TO_PERIODS` in
+`app/src/main/python/logic/category_period_map.py`, which is what produces the
+"supports the sensitive period for X" line on a recommendation.
 
-- **Two Room databases, not one**: `content.db` (curated, seeded once from
-  `content_seed.json` via a `RoomDatabase.Callback`, effectively read-only
-  after that) and `userdata.db` (the household's actual data). This is a
-  refinement from the v0.2 doc's original plan to ship `content.db` as a
-  prebuilt SQLite asset via `createFromAsset()` — that approach turned out
-  to conflict with Room's internal schema-hash validation for prepackaged
-  databases, so seeding via callback is used instead. Functionally
-  equivalent, just more robust.
-- **Kotlin↔Python boundary is JSON strings, not object marshalling** (see
-  `logic/PythonBridge.kt` and `logic/bridge.py`). Slightly more overhead
-  than passing objects directly through Chaquopy, but it keeps the contract
-  simple, debuggable, and exactly mirrors what the Python `pytest` suite
-  already exercises.
-- **Python calls run on `Dispatchers.Default`, never the caller's
-  dispatcher.** Chaquopy calls are blocking native calls; the two
-  repository methods that invoke Python (`RecommendationRepository`,
-  `ShelfRepository`) explicitly `withContext(Dispatchers.Default)` around
-  them so they can't block the UI thread.
-- **Repository pattern is the seam for "wider" later.** You mentioned
-  wanting accounts and broader functionality eventually — every screen
-  talks only to a repository interface-shaped class (`ChildRepository`,
-  `ContentRepository`, etc.), never directly to Room or Python. Adding
-  accounts/sync later means introducing a remote data source behind these
-  same repository classes, not rewriting the UI or ViewModels.
-- **No launcher icon artwork** — `ic_launcher_background/foreground.xml` are
-  functional placeholders (flat color + a simple leaf mark) so the project
-  builds; swap them before shipping.
-- **Manual DI, no Hilt** — `ViewModelFactory` is a small hand-rolled lambda
-  factory. Fine at this size; worth reconsidering if the dependency graph
-  grows once a backend is added.
+Content is seeded into `content.db` **once, on first launch**. To re-seed during
+development, uninstall the app or clear its storage — otherwise the old content
+persists.
 
-## What's genuinely done vs. still open
+---
 
-Done: full data model, working (tested) recommendation + rotation logic, a
-24-activity / 9-sensitive-period starter content library across 0–6 years,
-and a complete navigation flow (child picker → Today / Library / Journal /
-Shelf).
+## Known gaps
 
-Still open, in rough priority order:
-1. Compile it in Android Studio and fix whatever the first build surfaces.
-2. Expand `tools/generate_content_seed.py` — 24 activities is a starting
-   skeleton, not a real content library.
-3. `DatePicker` for "add child" instead of the placeholder year/month text
-   fields.
-4. `WorkManager` job + local notification for shelf-rotation reminders
-   (design doc v0.2 §2 describes this; not yet wired up).
-5. Compose UI tests / Room instrumented tests (see design doc v0.2 §3 for
-   the intended test strategy per layer).
+Roughly in priority order:
+
+1. **Content volume and review** — 24 activities across 0–6 years is a skeleton.
+   See [Content provenance](#content-provenance); this is the most important
+   item on the list.
+2. **Content seeding is asynchronous** — on a cold first launch, a screen can
+   read `content.db` before seeding finishes and briefly show an empty library.
+3. **Add-child uses plain year/month text fields** instead of a date picker.
+4. **Shelf-rotation reminders aren't wired up** — the rotation logic and
+   `WorkManager` dependency exist, but no scheduled job or notification does.
+5. **`material-icons-extended` is pulled in for 4 icons** — it bundles the whole
+   Material catalog and measurably slows dexing. Replace with per-icon imports.
+6. **Placeholder launcher icon** — `ic_launcher_foreground.xml` is a flat shape.
+7. **No release signing config** — required before any Play upload.
+8. **`kotlinOptions` deprecation warning** — harmless on AGP 8.9; will need
+   migrating to `compilerOptions` whenever AGP 9 happens.
+9. **Chaquopy `.pyc` warning** — it wants a local Python 3.12 to pre-compile
+   bytecode. Cosmetic; the app ships `.py` source and behaves identically.
+
+---
+
+## Privacy
+
+No network permission is declared. No data leaves the device. Android Auto
+Backup is enabled for `userdata.db` only (see `res/xml/backup_rules.xml`), so a
+parent's journal survives a reinstall via their own Google account; the bundled
+content database is excluded since it ships with the APK.
+
+If cloud sync or accounts are added later, this section needs rewriting — and an
+app handling children's data should have a real privacy policy before it reaches
+Play.
