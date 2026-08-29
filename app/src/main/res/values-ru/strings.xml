@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Russian UI strings. FIRST PASS — needs native review before release
+  (see PRD v0.5 §10). Note Russian plurals need one/few/many/other, not just
+  one/other as in English: 1 месяц, 2-4 месяца, 5-20 месяцев.
+-->
+<resources>
+    <string name="app_name">Montessori Copilot</string>
+
+    <!-- Child list / onboarding -->
+    <string name="children_title">Montessori Copilot</string>
+    <string name="add_child">Добавить ребёнка</string>
+    <string name="add_a_child">Добавить ребёнка</string>
+    <string name="welcome_title">Добро пожаловать</string>
+    <string name="welcome_body">Добавьте имя и дату рождения ребёнка, чтобы получить занятия по возрасту, дневник наблюдений и учёт полки — всё хранится на этом устройстве.</string>
+    <string name="child_name">Имя</string>
+    <string name="birth_year">Год рождения</string>
+    <string name="birth_month">Месяц рождения (1–12)</string>
+    <string name="action_add">Добавить</string>
+    <string name="action_cancel">Отмена</string>
+    <plurals name="age_months">
+        <item quantity="one">%d месяц</item>
+        <item quantity="few">%d месяца</item>
+        <item quantity="many">%d месяцев</item>
+        <item quantity="other">%d месяца</item>
+    </plurals>
+
+    <!-- Navigation -->
+    <string name="tab_today">Сегодня</string>
+    <string name="tab_library">Занятия</string>
+    <string name="tab_journal">Дневник</string>
+    <string name="tab_shelf">Полка</string>
+    <string name="back_to_children">Назад к детям</string>
+
+    <!-- Today -->
+    <string name="today_header">%1$s · %2$d мес.</string>
+    <string name="active_sensitive_periods">Активные сенситивные периоды</string>
+    <string name="suggested_activities">Предлагаемые занятия</string>
+    <string name="supports_sensitive_period">Поддерживает текущий сенситивный период: %1$s</string>
+    <string name="action_not_now">Не сейчас</string>
+    <plurals name="items_due_for_rotation">
+        <item quantity="one">%d предмет на полке пора заменить — откройте вкладку «Полка».</item>
+        <item quantity="few">%d предмета на полке пора заменить — откройте вкладку «Полка».</item>
+        <item quantity="many">%d предметов на полке пора заменить — откройте вкладку «Полка».</item>
+        <item quantity="other">%d предмета на полке пора заменить — откройте вкладку «Полка».</item>
+    </plurals>
+
+    <!-- Library -->
+    <string name="search_activities">Поиск занятий</string>
+    <string name="materials_label">Материалы: %1$s</string>
+    <string name="age_range_months">%1$d–%2$d мес.</string>
+    <string name="session_minutes">Около %1$d мин</string>
+
+    <!-- Curriculum areas -->
+    <string name="area_practical_life">Практическая жизнь</string>
+    <string name="area_sensorial">Сенсорика</string>
+    <string name="area_language">Язык</string>
+    <string name="area_mathematics">Математика</string>
+    <string name="area_movement">Движение</string>
+    <string name="area_art_and_music">Искусство и музыка</string>
+    <string name="area_grace_and_courtesy">Вежливость и манеры</string>
+    <string name="area_culture_and_nature">Культура и природа</string>
+
+    <!-- Mess level -->
+    <string name="mess_none">Без беспорядка</string>
+    <string name="mess_low">Почти без беспорядка</string>
+    <string name="mess_medium">Немного беспорядка</string>
+    <string name="mess_high">Будет грязно</string>
+
+    <!-- Activity detail sections -->
+    <string name="section_why_it_matters">Зачем это нужно</string>
+    <string name="section_how_to_present">Как показать</string>
+    <string name="section_what_to_observe">За чем наблюдать</string>
+    <string name="section_common_mistakes">Частые ошибки</string>
+    <string name="section_materials">Материалы</string>
+    <string name="section_homemade">Самодельный вариант</string>
+    <string name="section_supervision">Безопасность</string>
+
+    <!-- Journal -->
+    <string name="journal_prompt">Что вы заметили?</string>
+    <string name="log_entry">Записать</string>
+
+    <!-- Shelf -->
+    <string name="add_to_active_shelf">Добавить предмет на активную полку</string>
+    <string name="active_shelf">Активная полка</string>
+    <string name="storage_rotation">В ротации</string>
+    <string name="move_to_storage">Убрать в ротацию</string>
+    <string name="move_to_active_shelf">Вернуть на полку</string>
+    <string name="due_for_rotation">Пора заменить</string>
+    <string name="untitled_item">Без названия</string>
+    <plurals name="days_on_shelf">
+        <item quantity="one">%d день на полке</item>
+        <item quantity="few">%d дня на полке</item>
+        <item quantity="many">%d дней на полке</item>
+        <item quantity="other">%d дня на полке</item>
+    </plurals>
+
+    <!-- Provenance / disclaimer -->
+    <string name="provenance_own_words">Написано для этого приложения</string>
+    <string name="provenance_montessori_pd">Из опубликованных работ Марии Монтессори</string>
+    <string name="disclaimer">Рекомендации для взрослых, вдохновлённые методом Монтессори. Это не сертификация, не медицинская и не терапевтическая услуга. Всегда присматривайте за ребёнком и адаптируйте занятия под свою ситуацию.</string>
+</resources>

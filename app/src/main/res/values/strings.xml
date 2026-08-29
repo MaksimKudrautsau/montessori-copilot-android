@@ -1,4 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Montessori Copilot</string>
+
+    <!-- Child list / onboarding -->
+    <string name="children_title">Montessori Copilot</string>
+    <string name="add_child">Add child</string>
+    <string name="add_a_child">Add a child</string>
+    <string name="welcome_title">Welcome</string>
+    <string name="welcome_body">Add your child\'s name and birth date to get age-appropriate Montessori activities, a journal, and a shelf tracker — all kept on this device.</string>
+    <string name="child_name">Name</string>
+    <string name="birth_year">Birth year</string>
+    <string name="birth_month">Birth month (1–12)</string>
+    <string name="action_add">Add</string>
+    <string name="action_cancel">Cancel</string>
+    <plurals name="age_months">
+        <item quantity="one">%d month old</item>
+        <item quantity="other">%d months old</item>
+    </plurals>
+
+    <!-- Navigation -->
+    <string name="tab_today">Today</string>
+    <string name="tab_library">Library</string>
+    <string name="tab_journal">Journal</string>
+    <string name="tab_shelf">Shelf</string>
+    <string name="back_to_children">Back to children</string>
+
+    <!-- Today -->
+    <string name="today_header">%1$s · %2$d months</string>
+    <string name="active_sensitive_periods">Active sensitive periods</string>
+    <string name="suggested_activities">Suggested activities</string>
+    <string name="supports_sensitive_period">Supports the current sensitive period for %1$s</string>
+    <string name="action_not_now">Not now</string>
+    <plurals name="items_due_for_rotation">
+        <item quantity="one">%d shelf item may be ready to rotate — see the Shelf tab.</item>
+        <item quantity="other">%d shelf items may be ready to rotate — see the Shelf tab.</item>
+    </plurals>
+
+    <!-- Library -->
+    <string name="search_activities">Search activities</string>
+    <string name="materials_label">Materials: %1$s</string>
+    <string name="age_range_months">%1$d–%2$d months</string>
+    <string name="session_minutes">About %1$d min</string>
+
+    <!-- Curriculum areas -->
+    <string name="area_practical_life">Practical Life</string>
+    <string name="area_sensorial">Sensorial</string>
+    <string name="area_language">Language</string>
+    <string name="area_mathematics">Mathematics</string>
+    <string name="area_movement">Movement</string>
+    <string name="area_art_and_music">Art &amp; Music</string>
+    <string name="area_grace_and_courtesy">Grace &amp; Courtesy</string>
+    <string name="area_culture_and_nature">Culture &amp; Nature</string>
+
+    <!-- Mess level -->
+    <string name="mess_none">No mess</string>
+    <string name="mess_low">Low mess</string>
+    <string name="mess_medium">Some mess</string>
+    <string name="mess_high">Messy</string>
+
+    <!-- Activity detail sections -->
+    <string name="section_why_it_matters">Why it matters</string>
+    <string name="section_how_to_present">How to present it</string>
+    <string name="section_what_to_observe">What to observe</string>
+    <string name="section_common_mistakes">Common mistakes</string>
+    <string name="section_materials">Materials</string>
+    <string name="section_homemade">Homemade alternative</string>
+    <string name="section_supervision">Supervision</string>
+
+    <!-- Journal -->
+    <string name="journal_prompt">What did you observe?</string>
+    <string name="log_entry">Log entry</string>
+
+    <!-- Shelf -->
+    <string name="add_to_active_shelf">Add item to active shelf</string>
+    <string name="active_shelf">Active shelf</string>
+    <string name="storage_rotation">Storage rotation</string>
+    <string name="move_to_storage">Move to storage</string>
+    <string name="move_to_active_shelf">Move to active shelf</string>
+    <string name="due_for_rotation">Due for rotation</string>
+    <string name="untitled_item">Untitled item</string>
+    <plurals name="days_on_shelf">
+        <item quantity="one">%d day on shelf</item>
+        <item quantity="other">%d days on shelf</item>
+    </plurals>
+
+    <!-- Provenance / disclaimer -->
+    <string name="provenance_own_words">Written for this app</string>
+    <string name="provenance_montessori_pd">From Maria Montessori\'s published works</string>
+    <string name="disclaimer">Montessori-inspired guidance for adults. Not a certification, medical, or therapeutic service. Always supervise your child and adapt to your own situation.</string>
 </resources>

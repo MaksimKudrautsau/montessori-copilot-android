@@ -7,15 +7,17 @@ import kotlinx.serialization.Serializable
  * Wire types for the Kotlin <-> Python JSON boundary (see logic/bridge.py).
  * Field names are snake_case via @SerialName because that's the contract
  * bridge.py's payloads use — Python-side dict keys, not Kotlin convention.
- * Kept separate from the Room entities in data/content and data/user so
- * either side can evolve without silently breaking the other.
+ *
+ * Note these carry **no localised text**. The recommendation engine works on
+ * ids, ages and curriculum areas only; titles are resolved from Room after the
+ * ids come back, which keeps the bridge payload small and language-agnostic.
  */
 
 @Serializable
 data class ActivityForPython(
     val id: Int,
-    val title: String,
-    val category: String,
+    /** One of Areas.* — see data/content/ContentEntities.kt. */
+    val area: String,
     @SerialName("age_min_months") val ageMinMonths: Int,
     @SerialName("age_max_months") val ageMaxMonths: Int,
 )
@@ -25,6 +27,8 @@ data class RecommendRequest(
     @SerialName("child_age_months") val childAgeMonths: Int,
     val activities: List<ActivityForPython>,
     @SerialName("dismissed_ids") val dismissedIds: List<Int> = emptyList(),
+    /** English sensitive-period names — the Python lookup table is keyed on
+     *  English by design, and the localised name is resolved for display. */
     @SerialName("active_period_names") val activePeriodNames: List<String> = emptyList(),
     val limit: Int = 10,
 )
@@ -32,11 +36,16 @@ data class RecommendRequest(
 @Serializable
 data class RecommendedActivityResult(
     val id: Int,
-    val title: String,
-    val category: String,
+    val area: String,
     @SerialName("age_min_months") val ageMinMonths: Int,
     @SerialName("age_max_months") val ageMaxMonths: Int,
-    val reason: String? = null,
+    /**
+     * The ENGLISH name of an active sensitive period this activity's area
+     * serves, or null. Deliberately a bare name rather than a sentence: the
+     * matching table is keyed on English, but the displayed wording is built
+     * from a string resource so a Russian user reads Russian.
+     */
+    @SerialName("reason_period") val reasonPeriodEn: String? = null,
 )
 
 @Serializable

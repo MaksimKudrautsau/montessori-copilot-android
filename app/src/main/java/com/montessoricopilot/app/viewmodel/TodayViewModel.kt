@@ -2,14 +2,13 @@ package com.montessoricopilot.app.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.montessoricopilot.app.data.content.SensitivePeriodEntity
+import com.montessoricopilot.app.data.content.LocalizedSensitivePeriod
 import com.montessoricopilot.app.data.repository.ChildRepository
 import com.montessoricopilot.app.data.repository.ContentRepository
+import com.montessoricopilot.app.data.repository.Recommendation
 import com.montessoricopilot.app.data.repository.RecommendationRepository
 import com.montessoricopilot.app.data.repository.ShelfRepository
 import com.montessoricopilot.app.data.user.ChildEntity
-import com.montessoricopilot.app.logic.RecommendedActivityResult
-import com.montessoricopilot.app.logic.ShelfRotationResult
 import com.montessoricopilot.app.logic.ageInMonths
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +20,8 @@ data class TodayUiState(
     val isLoading: Boolean = true,
     val child: ChildEntity? = null,
     val ageMonths: Int = 0,
-    val recommendations: List<RecommendedActivityResult> = emptyList(),
-    val activePeriods: List<SensitivePeriodEntity> = emptyList(),
+    val recommendations: List<Recommendation> = emptyList(),
+    val activePeriods: List<LocalizedSensitivePeriod> = emptyList(),
     val itemsDueForRotation: Int = 0,
 )
 
@@ -48,8 +47,7 @@ class TodayViewModel(
             val activePeriods = contentRepository.activeSensitivePeriods(age)
 
             val shelfItems = shelfRepository.observeForChild(childId).first()
-            val rotationStatuses: List<ShelfRotationResult> = shelfRepository.rotationStatus(shelfItems)
-            val dueCount = rotationStatuses.count { it.dueForRotation }
+            val dueCount = shelfRepository.rotationStatus(shelfItems).count { it.dueForRotation }
 
             _uiState.value = TodayUiState(
                 isLoading = false,

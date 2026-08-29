@@ -11,9 +11,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-/** A shelf item joined with its resolved title and rotation-due status —
- *  the view doesn't need to know that title resolution and rotation
- *  status come from two different sources (Room + Python). */
+/**
+ * A shelf item joined with its resolved title and rotation-due status. The
+ * view doesn't need to know that the title comes from Room (in the user's
+ * language) while the rotation status comes from Python.
+ */
 data class ShelfItemUi(
     val item: ShelfItemEntity,
     val title: String,
@@ -31,6 +33,9 @@ class ShelfViewModel(
     private val childId: Int,
     private val shelfRepository: ShelfRepository,
     private val contentRepository: ContentRepository,
+    /** Localised "Untitled item", resolved by the caller — a ViewModel has no
+     *  Context and should not be reaching for string resources itself. */
+    private val fallbackTitle: String,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ShelfUiState())
@@ -43,14 +48,17 @@ class ShelfViewModel(
     }
 
     private suspend fun refresh(items: List<ShelfItemEntity>) {
-        val activityTitles = contentRepository
+        // Titles for library-linked items come back in the user's language.
+        val titles = contentRepository
             .activitiesByIds(items.mapNotNull { it.activityId })
             .associateBy { it.id }
 
         val rotationById = shelfRepository.rotationStatus(items).associateBy { it.id }
 
         val enriched = items.map { item ->
-            val title = item.customTitle ?: activityTitles[item.activityId]?.title ?: "Untitled item"
+            val title = item.customTitle
+                ?: titles[item.activityId]?.title
+                ?: fallbackTitle
             val rotation = rotationById[item.id]
             ShelfItemUi(item, title, rotation?.dueForRotation ?: false, rotation?.daysOnShelf)
         }
@@ -64,7 +72,11 @@ class ShelfViewModel(
 
     fun addCustomItem(title: String) {
         if (title.isBlank()) return
-        viewModelScope.launch { shelfRepository.addItem(childId, activityId = null, customTitle = title, active = true) }
+        viewModelScope.launch {
+            shelfRepository.addItem(
+                childId = childId, activityId = null, customTitle = title, active = true,
+            )
+        }
     }
 
     fun moveToStorage(item: ShelfItemEntity) {

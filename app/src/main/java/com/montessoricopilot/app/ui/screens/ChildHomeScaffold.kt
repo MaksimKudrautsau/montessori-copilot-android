@@ -26,13 +26,20 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.montessoricopilot.app.R
 import com.montessoricopilot.app.data.repository.ChildRepository
 import com.montessoricopilot.app.data.repository.ContentRepository
 import com.montessoricopilot.app.data.repository.JournalRepository
 import com.montessoricopilot.app.data.repository.RecommendationRepository
 import com.montessoricopilot.app.data.repository.ShelfRepository
 
-private enum class Tab(val label: String) { TODAY("Today"), LIBRARY("Library"), JOURNAL("Journal"), SHELF("Shelf") }
+private enum class Tab(val labelRes: Int) {
+    TODAY(R.string.tab_today),
+    LIBRARY(R.string.tab_library),
+    JOURNAL(R.string.tab_journal),
+    SHELF(R.string.tab_shelf),
+}
 
 @Composable
 fun ChildHomeScaffold(
@@ -50,10 +57,13 @@ fun ChildHomeScaffold(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(tabs[selectedTab].label) },
+                title = { Text(stringResource(tabs[selectedTab].labelRes)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back to children")
+                        Icon(
+                            Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back_to_children),
+                        )
                     }
                 },
             )
@@ -72,10 +82,10 @@ fun ChildHomeScaffold(
                                     Tab.JOURNAL -> Icons.Filled.Book
                                     Tab.SHELF -> Icons.Filled.Inventory2
                                 },
-                                contentDescription = tab.label,
+                                contentDescription = stringResource(tab.labelRes),
                             )
                         },
-                        label = { Text(tab.label) },
+                        label = { Text(stringResource(tab.labelRes)) },
                     )
                 }
             }
@@ -84,7 +94,8 @@ fun ChildHomeScaffold(
         val contentModifier = Modifier.padding(padding)
         when (tabs[selectedTab]) {
             Tab.TODAY -> TodayScreen(
-                childId, childRepository, contentRepository, recommendationRepository, shelfRepository, contentModifier,
+                childId, childRepository, contentRepository,
+                recommendationRepository, shelfRepository, contentModifier,
             )
             Tab.LIBRARY -> LibraryScreen(contentRepository, contentModifier)
             Tab.JOURNAL -> JournalScreen(childId, journalRepository, contentModifier)

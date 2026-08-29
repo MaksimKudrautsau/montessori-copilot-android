@@ -5,53 +5,53 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Database(
-    entities = [ActivityEntity::class, SensitivePeriodEntity::class],
-    version = 1,
+    entities = [
+        ActivityEntity::class,
+        ActivityTextEntity::class,
+        SensitivePeriodEntity::class,
+        SensitivePeriodTextEntity::class,
+    ],
+    version = 2,
     exportSchema = true,
 )
 abstract class ContentDatabase : RoomDatabase() {
     abstract fun contentDao(): ContentDao
 
     companion object {
-        // Holds the instance being built so the onCreate callback below can
-        // reach its DAO. Safe because onCreate only fires on first real
-        // access to the database (a query, not build()), which always
-        // happens after `instance` has been assigned. This is the same
-        // pattern Google's own Room sample apps (e.g. Sunflower) use for
-        // seeding a database from a callback.
         @Volatile
         private var instance: ContentDatabase? = null
 
         /**
-         * Builds (or returns the already-built) content database, seeding it
-         * from assets/content_seed.json the first time it's created.
+         * Builds (or returns) the content database, seeding it synchronously
+         * from assets/content_seed.json the first time it is created.
          *
-         * `applicationScope` should live as long as the process — pass the
-         * CoroutineScope MontessoriApp holds, not a screen/ViewModel scope,
-         * since seeding must complete even if the first screen that
-         * triggered it is gone by the time it finishes.
+         * **Destructive migration is correct here.** This database is derived
+         * data — every row comes from a file bundled in the APK — so on a
+         * schema change the right move is to drop it and re-seed from the new
+         * file. Nothing a parent typed lives here; that is all in userdata.db,
+         * which never uses destructive migration.
          */
-        fun build(context: Context, applicationScope: CoroutineScope): ContentDatabase {
+        fun build(context: Context): ContentDatabase {
             instance?.let { return it }
-            synchronized(this) {
-                instance?.let { return it }
-                val appContext = context.applicationContext
-                val built = Room.databaseBuilder(appContext, ContentDatabase::class.java, "content.db")
-                    .addCallback(object : Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            applicationScope.launch {
-                                seedContentDatabase(appContext, requireNotNull(instance).contentDao())
+            return synchronized(this) {
+                instance ?: run {
+                    val appContext = context.applicationContext
+                    Room.databaseBuilder(appContext, ContentDatabase::class.java, "content.db")
+                        .addCallback(object : Callback() {
+                            override fun onCreate(db: SupportSQLiteDatabase) {
+                                super.onCreate(db)
+                                // Synchronous, inside Room's own creation
+                                // transaction — no query can observe an empty
+                                // library. See ContentSeed.kt.
+                                seedContentDatabase(appContext, db)
                             }
-                        }
-                    })
-                    .build()
-                instance = built
-                return built
+                        })
+                        .fallbackToDestructiveMigration(dropAllTables = true)
+                        .build()
+                        .also { instance = it }
+                }
             }
         }
     }
