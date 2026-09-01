@@ -31,11 +31,45 @@
     <string name="tab_journal">Дневник</string>
     <string name="tab_shelf">Полка</string>
     <string name="back_to_children">Назад к детям</string>
+    <string name="back">Назад</string>
+    <string name="attributions">Настройки и источники</string>
+
+    <!-- Language switcher. Language names stay untranslated (see values/). -->
+    <string name="language">Язык</string>
+    <string name="language_system">Как в системе</string>
+
+    <!-- Attributions -->
+    <string name="attributions_title">Настройки и источники</string>
+    <string name="attributions_content_heading">Откуда взято содержание</string>
+    <string name="attributions_content_body">Занятия либо написаны специально для этого приложения на основе общих знаний о методе Монтессори, либо взяты из опубликованных работ Марии Монтессори, находящихся в общественном достоянии. Источник указан внизу страницы каждого занятия.</string>
+    <string name="attributions_images_heading">Авторы изображений</string>
+    <string name="attributions_no_images">Фотографий пока нет. Сейчас у занятий отображается иллюстрированная плитка их учебной области.</string>
+    <string name="source_label">Источник: %1$s</string>
+    <string name="image_credit_label">Изображение: %1$s</string>
 
     <!-- Today -->
     <string name="today_header">%1$s · %2$d мес.</string>
     <string name="active_sensitive_periods">Активные сенситивные периоды</string>
+    <string name="todays_focus">Занятие дня</string>
+    <string name="more_ideas">Другие идеи</string>
     <string name="suggested_activities">Предлагаемые занятия</string>
+
+    <!-- Upcoming monthly milestone -->
+    <string name="milestone_today">Сегодня %1$s исполняется %2$d мес.</string>
+    <string name="milestone_tomorrow">Завтра %1$s исполняется %2$d мес.</string>
+    <string name="milestone_in_days">Через %3$d дн. %1$s исполняется %2$d мес.</string>
+    <string name="milestone_new_activities">Появятся новые подходящие занятия</string>
+    <string name="milestone_periods_starting">Начинается: %1$s</string>
+    <string name="milestone_periods_ending">Завершается: %1$s</string>
+
+    <!-- Weekly reminder notification -->
+    <string name="notification_channel_name">Еженедельное напоминание</string>
+    <string name="notification_channel_description">Одно спокойное напоминание в неделю о смене материалов на полке и о том, что меняется у ребёнка.</string>
+    <string name="notification_rotation_title">Пора обновить полку</string>
+    <string name="notification_milestone_title">На этой неделе кое-что меняется</string>
+    <string name="weekly_reminder">Еженедельное напоминание</string>
+    <string name="weekly_reminder_on">Еженедельное напоминание включено</string>
+    <string name="weekly_reminder_off">Еженедельное напоминание выключено</string>
     <string name="supports_sensitive_period">Поддерживает текущий сенситивный период: %1$s</string>
     <string name="action_not_now">Не сейчас</string>
     <plurals name="items_due_for_rotation">
@@ -47,6 +81,7 @@
 
     <!-- Library -->
     <string name="search_activities">Поиск занятий</string>
+    <string name="no_activities_match">Ничего не найдено. Попробуйте другую область или запрос.</string>
     <string name="materials_label">Материалы: %1$s</string>
     <string name="age_range_months">%1$d–%2$d мес.</string>
     <string name="session_minutes">Около %1$d мин</string>

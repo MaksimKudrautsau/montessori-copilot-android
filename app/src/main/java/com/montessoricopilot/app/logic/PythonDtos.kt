@@ -48,6 +48,47 @@ data class RecommendedActivityResult(
     @SerialName("reason_period") val reasonPeriodEn: String? = null,
 )
 
+// --- Daily loop (PRD v0.5 E3) -----------------------------------------------
+
+@Serializable
+data class DailyFocusRequest(
+    @SerialName("child_id") val childId: Int,
+    /** LocalDate.toEpochDay() — the rotation is seeded on this, so the same
+     *  child sees the same activity all day and a new one tomorrow. */
+    @SerialName("day_number") val dayNumber: Long,
+    @SerialName("child_age_months") val childAgeMonths: Int,
+    val activities: List<ActivityForPython>,
+    @SerialName("dismissed_ids") val dismissedIds: List<Int> = emptyList(),
+    @SerialName("active_period_names") val activePeriodNames: List<String> = emptyList(),
+)
+
+@Serializable
+data class PeriodForPython(
+    /** English name — the matcher's table is keyed on English. */
+    val name: String,
+    @SerialName("age_min_months") val ageMinMonths: Int,
+    @SerialName("age_max_months") val ageMaxMonths: Int,
+)
+
+@Serializable
+data class UpcomingChangesRequest(
+    @SerialName("current_age_months") val currentAgeMonths: Int,
+    @SerialName("next_age_months") val nextAgeMonths: Int,
+    val activities: List<ActivityForPython>,
+    val periods: List<PeriodForPython>,
+)
+
+@Serializable
+data class UpcomingChangesResult(
+    @SerialName("next_age_months") val nextAgeMonths: Int,
+    @SerialName("newly_eligible_ids") val newlyEligibleIds: List<Int> = emptyList(),
+    @SerialName("periods_starting") val periodsStarting: List<String> = emptyList(),
+    @SerialName("periods_ending") val periodsEnding: List<String> = emptyList(),
+    /** False in most months; the UI shows no banner at all rather than an
+     *  empty one. */
+    @SerialName("has_changes") val hasChanges: Boolean = false,
+)
+
 @Serializable
 data class ShelfItemForPython(
     val id: Int,

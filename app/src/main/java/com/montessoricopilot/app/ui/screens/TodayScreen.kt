@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -22,11 +24,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.montessoricopilot.app.R
 import com.montessoricopilot.app.data.repository.ChildRepository
 import com.montessoricopilot.app.data.repository.ContentRepository
-import com.montessoricopilot.app.data.repository.Recommendation
+import com.montessoricopilot.app.data.repository.DailyRepository
 import com.montessoricopilot.app.data.repository.RecommendationRepository
 import com.montessoricopilot.app.data.repository.ShelfRepository
 import com.montessoricopilot.app.ui.ViewModelFactory
-import com.montessoricopilot.app.ui.areaLabel
+import com.montessoricopilot.app.ui.components.ActivityCard
+import com.montessoricopilot.app.ui.components.MilestoneBanner
+import com.montessoricopilot.app.ui.components.StaggeredEntrance
 import com.montessoricopilot.app.viewmodel.TodayViewModel
 
 @Composable
@@ -36,13 +40,15 @@ fun TodayScreen(
     contentRepository: ContentRepository,
     recommendationRepository: RecommendationRepository,
     shelfRepository: ShelfRepository,
+    dailyRepository: DailyRepository,
+    onActivityClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: TodayViewModel = viewModel(
         factory = ViewModelFactory {
             TodayViewModel(
                 childId, childRepository, contentRepository,
-                recommendationRepository, shelfRepository,
+                recommendationRepository, shelfRepository, dailyRepository,
             )
         },
     )
@@ -64,7 +70,12 @@ fun TodayScreen(
 
         if (state.itemsDueForRotation > 0) {
             item {
-                Card(modifier = Modifier.fillMaxWidth().padding(top = 16.dp)) {
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.15f),
+                    ),
+                ) {
                     Text(
                         pluralStringResource(
                             R.plurals.items_due_for_rotation,
@@ -78,6 +89,32 @@ fun TodayScreen(
             }
         }
 
+        state.milestone?.let { milestone ->
+            item {
+                MilestoneBanner(
+                    childName = state.child?.name.orEmpty(),
+                    milestone = milestone,
+                )
+            }
+        }
+
+        // Today's focus: one activity, given its own heading and full card, so
+        // a parent with three minutes has a single obvious thing to do.
+        state.focus?.let { focus ->
+            item {
+                Text(
+                    stringResource(R.string.todays_focus),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
+                )
+                ActivityCard(
+                    activity = focus.activity,
+                    onClick = { onActivityClick(focus.activity.id) },
+                    reasonPeriodName = focus.reasonPeriodName,
+                )
+            }
+        }
+
         if (state.activePeriods.isNotEmpty()) {
             item {
                 Text(
@@ -87,59 +124,46 @@ fun TodayScreen(
                 )
             }
             items(state.activePeriods, key = { it.id }) { period ->
-                Column(modifier = Modifier.padding(bottom = 8.dp)) {
+                Column(modifier = Modifier.padding(bottom = 10.dp)) {
                     Text(period.name, style = MaterialTheme.typography.bodyLarge)
                     Text(
                         period.whatYoullNotice,
                         style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.75f),
                     )
                 }
             }
         }
 
-        item {
-            Text(
-                stringResource(R.string.suggested_activities),
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
-            )
-        }
-        items(state.recommendations, key = { it.activity.id }) { recommendation ->
-            RecommendationCard(
-                recommendation = recommendation,
-                onDismiss = { viewModel.dismissRecommendation(recommendation.activity.id) },
-            )
-        }
-    }
-}
-
-@Composable
-private fun RecommendationCard(recommendation: Recommendation, onDismiss: () -> Unit) {
-    val activity = recommendation.activity
-    Card(modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp)) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(activity.title, style = MaterialTheme.typography.titleLarge)
-            Text(
-                stringResource(areaLabel(activity.area)),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-            Text(
-                activity.summary,
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 4.dp),
-            )
-            // The period name arrives localised; the sentence around it comes
-            // from a string resource, so this line is fully translated.
-            recommendation.reasonPeriodName?.let { periodName ->
+        if (state.recommendations.isNotEmpty()) {
+            item {
                 Text(
-                    stringResource(R.string.supports_sensitive_period, periodName),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(top = 4.dp),
+                    stringResource(
+                        if (state.focus != null) R.string.more_ideas
+                        else R.string.suggested_activities
+                    ),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
                 )
             }
-            TextButton(onClick = onDismiss, modifier = Modifier.padding(top = 4.dp)) {
-                Text(stringResource(R.string.action_not_now))
+        }
+        itemsIndexed(
+            state.recommendations,
+            key = { _, rec -> rec.activity.id },
+        ) { index, recommendation ->
+            StaggeredEntrance(index) {
+                ActivityCard(
+                    activity = recommendation.activity,
+                    onClick = { onActivityClick(recommendation.activity.id) },
+                    reasonPeriodName = recommendation.reasonPeriodName,
+                    trailing = {
+                        TextButton(
+                            onClick = {
+                                viewModel.dismissRecommendation(recommendation.activity.id)
+                            },
+                        ) { Text(stringResource(R.string.action_not_now)) }
+                    },
+                )
             }
         }
     }

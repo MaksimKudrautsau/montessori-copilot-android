@@ -5,6 +5,7 @@ import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.montessoricopilot.app.data.content.ContentDatabase
 import com.montessoricopilot.app.data.user.UserDatabase
+import com.montessoricopilot.app.work.WeeklyReminderWorker
 
 /**
  * Application entry point.
@@ -31,5 +32,8 @@ class MontessoriApp : Application() {
         if (!Python.isStarted()) {
             Python.start(AndroidPlatform(this))
         }
+        // Cheap and idempotent; creating the channel here means the system
+        // notification settings show it before the first reminder ever fires.
+        WeeklyReminderWorker.createChannel(this)
     }
 }

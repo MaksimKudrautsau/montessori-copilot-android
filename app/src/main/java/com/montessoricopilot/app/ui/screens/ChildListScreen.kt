@@ -15,11 +15,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -42,6 +44,7 @@ import com.montessoricopilot.app.data.repository.ChildRepository
 import com.montessoricopilot.app.data.user.ChildEntity
 import com.montessoricopilot.app.logic.ageInMonths
 import com.montessoricopilot.app.ui.ViewModelFactory
+import com.montessoricopilot.app.ui.components.LanguageMenu
 import com.montessoricopilot.app.viewmodel.ChildListViewModel
 import java.time.LocalDate
 
@@ -50,14 +53,31 @@ import java.time.LocalDate
  * child *is* the whole onboarding flow.
  */
 @Composable
-fun ChildListScreen(childRepository: ChildRepository, onChildSelected: (Int) -> Unit) {
+fun ChildListScreen(
+    childRepository: ChildRepository,
+    onChildSelected: (Int) -> Unit,
+    onAttributions: () -> Unit,
+) {
     val viewModel: ChildListViewModel =
         viewModel(factory = ViewModelFactory { ChildListViewModel(childRepository) })
     val children by viewModel.children.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.children_title)) }) },
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.children_title)) },
+                actions = {
+                    LanguageMenu()
+                    IconButton(onClick = onAttributions) {
+                        Icon(
+                            Icons.Filled.Info,
+                            contentDescription = stringResource(R.string.attributions),
+                        )
+                    }
+                },
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = { showAddDialog = true }) {
                 Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_child))

@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import com.montessoricopilot.app.R
 import com.montessoricopilot.app.data.repository.ChildRepository
 import com.montessoricopilot.app.data.repository.ContentRepository
+import com.montessoricopilot.app.data.repository.DailyRepository
 import com.montessoricopilot.app.data.repository.JournalRepository
 import com.montessoricopilot.app.data.repository.RecommendationRepository
 import com.montessoricopilot.app.data.repository.ShelfRepository
@@ -49,7 +50,9 @@ fun ChildHomeScaffold(
     journalRepository: JournalRepository,
     shelfRepository: ShelfRepository,
     recommendationRepository: RecommendationRepository,
+    dailyRepository: DailyRepository,
     onBack: () -> Unit,
+    onActivityClick: (Int) -> Unit,
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     val tabs = Tab.entries
@@ -94,10 +97,20 @@ fun ChildHomeScaffold(
         val contentModifier = Modifier.padding(padding)
         when (tabs[selectedTab]) {
             Tab.TODAY -> TodayScreen(
-                childId, childRepository, contentRepository,
-                recommendationRepository, shelfRepository, contentModifier,
+                childId = childId,
+                childRepository = childRepository,
+                contentRepository = contentRepository,
+                recommendationRepository = recommendationRepository,
+                shelfRepository = shelfRepository,
+                dailyRepository = dailyRepository,
+                onActivityClick = onActivityClick,
+                modifier = contentModifier,
             )
-            Tab.LIBRARY -> LibraryScreen(contentRepository, contentModifier)
+            Tab.LIBRARY -> LibraryScreen(
+                contentRepository = contentRepository,
+                onActivityClick = onActivityClick,
+                modifier = contentModifier,
+            )
             Tab.JOURNAL -> JournalScreen(childId, journalRepository, contentModifier)
             Tab.SHELF -> ShelfScreen(childId, shelfRepository, contentRepository, contentModifier)
         }

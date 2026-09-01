@@ -48,7 +48,10 @@ abstract class ContentDatabase : RoomDatabase() {
                                 seedContentDatabase(appContext, db)
                             }
                         })
-                        .fallbackToDestructiveMigration(dropAllTables = true)
+                        // No-arg form: the `dropAllTables` parameter only
+                        // exists in Room 2.7+, and this project pins 2.6.1
+                        // (gradle/libs.versions.toml).
+                        .fallbackToDestructiveMigration()
                         .build()
                         .also { instance = it }
                 }

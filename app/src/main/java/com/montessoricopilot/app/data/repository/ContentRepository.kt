@@ -50,6 +50,11 @@ class ContentRepository(private val contentDao: ContentDao) {
     suspend fun activePeriodNames(ageMonths: Int): List<PeriodNames> =
         contentDao.getActivePeriodNames(currentLocale(), ageMonths)
 
+    /** Every period, English and localised name. Needed when translating names
+     *  for a future age, where the period isn't active yet. */
+    suspend fun allPeriodNames(): List<PeriodNames> =
+        contentDao.getAllPeriodNames(currentLocale())
+
     suspend fun allSensitivePeriods(): List<LocalizedSensitivePeriod> =
         contentDao.getAllSensitivePeriods(currentLocale())
 }

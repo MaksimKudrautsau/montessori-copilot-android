@@ -34,7 +34,14 @@ Usage:
 import json
 from pathlib import Path
 
-OUTPUT_PATH = Path(__file__).resolve().parent.parent / "app/src/main/assets/content_seed.json"
+ROOT = Path(__file__).resolve().parent.parent
+OUTPUT_PATH = ROOT / "app/src/main/assets/content_seed.json"
+
+# Written by tools/fetch_images.py, which reads licence and author straight
+# from the Wikimedia Commons API. Kept separate from the hand-authored content
+# below so that re-fetching images never risks touching the text, and so
+# attribution is machine-recorded rather than transcribed by hand.
+IMAGE_CREDITS_PATH = ROOT / "tools/image_credits.json"
 
 LOCALES = ("en", "ru")
 
@@ -840,6 +847,393 @@ ACTIVITIES = [
             "homemade_alternative": "Бесплатно. При желании позже можно добавить небольшой набор карточек.",
         },
     },
+
+    # ================= P1 additions ==========================================
+    # Targeted at the two measured gaps: 0-6 months, and the four curriculum
+    # areas added in P0 that had only two activities each.
+
+    # ---------------- 0-6 months -------------------------------------------
+    {
+        "id": 31, "age_min_months": 0, "age_max_months": 6, "area": "language",
+        "infant_focus": "auditory", "session_minutes": 5,
+        "mess_level": "none", "provenance": "own_words",
+        "en": {
+            "title": "Talking through the routine",
+            "summary": "Narrating nappy changes, dressing and feeding in ordinary adult language.",
+            "why_it_matters": "Language is absorbed long before it is produced. Care routines happen many times a day and already have the baby's full attention, which makes them the richest language opportunity there is.",
+            "how_to_present": "Say what you are about to do, then pause and wait as if for an answer. 'I'm going to lift you now.' The pause matters as much as the words — it is the shape of a conversation.",
+            "what_to_observe": "Do they still and listen? Do they respond with sounds? Do they anticipate the next step?",
+            "common_mistakes": "Doing it silently while distracted, or narrating in a sing-song voice rather than normal speech.",
+            "materials_needed": "Nothing",
+            "homemade_alternative": "Free, and it replaces nothing — it happens during care you already do.",
+        },
+        "ru": {
+            "title": "Проговаривание бытовых действий",
+            "summary": "Комментирование смены подгузника, одевания и кормления обычной взрослой речью.",
+            "why_it_matters": "Язык усваивается задолго до того, как ребёнок начинает говорить. Уход повторяется много раз в день и уже имеет полное внимание малыша — это самая богатая языковая возможность.",
+            "how_to_present": "Скажите, что собираетесь сделать, затем сделайте паузу, будто ждёте ответа. «Сейчас я тебя подниму». Пауза важна не меньше слов — это форма диалога.",
+            "what_to_observe": "Замирает ли и слушает? Отвечает ли звуками? Предугадывает ли следующее действие?",
+            "common_mistakes": "Делать всё молча и отвлечённо или говорить нараспев вместо обычной речи.",
+            "materials_needed": "Ничего",
+            "homemade_alternative": "Бесплатно и ничего не заменяет — происходит во время ухода, который вы и так осуществляете.",
+        },
+    },
+    {
+        "id": 32, "age_min_months": 2, "age_max_months": 8, "area": "movement",
+        "infant_focus": "grasping", "session_minutes": 10,
+        "mess_level": "none", "provenance": "own_words",
+        "en": {
+            "title": "Grasping beads",
+            "summary": "A short string of smooth wooden beads, offered for holding and mouthing.",
+            "why_it_matters": "Weight, texture and the way beads shift in the hand give far more feedback than a moulded plastic rattle. Mouthing is how a baby of this age examines things closely.",
+            "how_to_present": "Place it in the open hand and let go. Do not shake it or demonstrate. Let the baby discover that moving the hand moves the beads.",
+            "what_to_observe": "Do they transfer hand to hand? Bring it to the mouth? Notice the sound it makes?",
+            "common_mistakes": "Choosing something that rattles by itself — then the baby is an audience rather than the cause.",
+            "materials_needed": "Five large smooth wooden beads on a short strong cord",
+            "homemade_alternative": "Large untreated wooden beads on waxed cotton, knotted between each.",
+            "supervision_note": "Constant supervision. Cord must be short and strong, beads too large to swallow. Check for wear before every use.",
+        },
+        "ru": {
+            "title": "Бусины для захвата",
+            "summary": "Короткая связка гладких деревянных бусин, которую малыш держит и тянет в рот.",
+            "why_it_matters": "Вес, фактура и то, как бусины смещаются в руке, дают куда больше обратной связи, чем пластиковая погремушка. В этом возрасте рот — главный инструмент исследования.",
+            "how_to_present": "Вложите в раскрытую ладонь и отпустите. Не трясите и не показывайте. Пусть малыш сам обнаружит, что движение руки двигает бусины.",
+            "what_to_observe": "Перекладывает ли из руки в руку? Подносит ли ко рту? Замечает ли звук?",
+            "common_mistakes": "Выбрать предмет, который гремит сам — тогда ребёнок зритель, а не причина.",
+            "materials_needed": "Пять крупных гладких деревянных бусин на короткой прочной верёвочке",
+            "homemade_alternative": "Крупные необработанные деревянные бусины на вощёном шнуре с узлами между ними.",
+            "supervision_note": "Только под постоянным присмотром. Шнур короткий и прочный, бусины слишком крупные, чтобы проглотить. Проверяйте на износ перед каждым использованием.",
+        },
+    },
+    {
+        "id": 33, "age_min_months": 4, "age_max_months": 10, "area": "practical_life",
+        "session_minutes": 15, "mess_level": "medium", "provenance": "own_words",
+        "en": {
+            "title": "Sitting at a weaning table",
+            "summary": "A low table and chair where the baby sits unaided to eat, instead of a high chair.",
+            "why_it_matters": "Getting in and out under their own power makes eating something the child does, not something done to them. It also builds the trunk strength a high chair takes over.",
+            "how_to_present": "Offer food on a small real plate. Sit at their level. Let them leave the table when they are finished, rather than being released from it.",
+            "what_to_observe": "Do they get in and out unaided? Do they stay longer over time? Do they hand you the plate when finished?",
+            "common_mistakes": "Introducing it once the high chair habit is fixed. Easier from the first days of solids.",
+            "materials_needed": "Weaning table and chair sized so feet rest flat on the floor",
+            "homemade_alternative": "A small sturdy stool and a low table; the critical measurement is feet flat, knees at right angles.",
+            "supervision_note": "Never leave a child unattended while eating.",
+        },
+        "ru": {
+            "title": "Столик для прикорма",
+            "summary": "Низкий стол и стул, за которые ребёнок садится сам, вместо высокого стульчика.",
+            "why_it_matters": "Возможность сесть и встать самому превращает еду в то, что ребёнок делает, а не то, что делают с ним. Заодно укрепляется корпус, работу которого высокий стульчик берёт на себя.",
+            "how_to_present": "Предложите еду на маленькой настоящей тарелке. Сядьте на уровне ребёнка. Позвольте ему выйти из-за стола, когда он закончил, а не «отпускайте» его.",
+            "what_to_observe": "Садится и встаёт ли сам? Задерживается ли дольше со временем? Отдаёт ли тарелку, когда наелся?",
+            "common_mistakes": "Вводить, когда привычка к высокому стульчику уже закрепилась. Проще с первых дней прикорма.",
+            "materials_needed": "Столик и стульчик такой высоты, чтобы стопы стояли на полу",
+            "homemade_alternative": "Устойчивая табуретка и низкий стол; главное — стопы на полу, колени под прямым углом.",
+            "supervision_note": "Никогда не оставляйте ребёнка есть без присмотра.",
+        },
+    },
+    # ---------------- Language ----------------------------------------------
+    {
+        "id": 34, "age_min_months": 12, "age_max_months": 36, "area": "language",
+        "session_minutes": 10, "mess_level": "none", "provenance": "own_words",
+        "en": {
+            "title": "Realistic picture books",
+            "summary": "Books showing real photographs or accurate drawings of things that exist.",
+            "why_it_matters": "Under about three, a child is still building a model of the actual world. Talking animals and fantasy are harder to place until reality is solid.",
+            "how_to_present": "Sit beside rather than opposite. Name what is on the page and stop. Let them turn the pages, including backwards.",
+            "what_to_observe": "Which page do they return to? Do they point? Do they bring the book to you?",
+            "common_mistakes": "Reading over their page-turning. Following their pace matters more than finishing the book.",
+            "materials_needed": "A few realistic board books, kept front-facing on a low shelf",
+            "homemade_alternative": "Photographs of family, food and pets in a small album — often the most-loved book in the house.",
+        },
+        "ru": {
+            "title": "Книги с реалистичными изображениями",
+            "summary": "Книги с настоящими фотографиями или точными рисунками существующих вещей.",
+            "why_it_matters": "Примерно до трёх лет ребёнок ещё выстраивает модель реального мира. Говорящих животных и фантазию труднее уложить в голове, пока реальность не закрепилась.",
+            "how_to_present": "Сядьте рядом, а не напротив. Назовите то, что на странице, и замолчите. Дайте листать самому, в том числе назад.",
+            "what_to_observe": "К какой странице возвращается? Показывает ли пальцем? Приносит ли книгу вам?",
+            "common_mistakes": "Продолжать читать, когда ребёнок уже перелистнул. Следовать его темпу важнее, чем дочитать.",
+            "materials_needed": "Несколько реалистичных книг-картонок, стоящих обложкой вперёд на низкой полке",
+            "homemade_alternative": "Фотографии семьи, еды и питомцев в небольшом альбоме — часто самая любимая книга в доме.",
+        },
+    },
+    {
+        "id": 35, "age_min_months": 30, "age_max_months": 60, "area": "language",
+        "session_minutes": 10, "mess_level": "none", "provenance": "montessori_pd",
+        "en": {
+            "title": "Sound games",
+            "summary": "'I spy something beginning with mmm' — played anywhere, with no materials.",
+            "why_it_matters": "Hearing the separate sounds inside a word is the single best predictor of easy reading later. It has to come before letters, not after.",
+            "how_to_present": "Use the sound, never the letter name. Start with first sounds only, with two or three objects in view. Move to last sounds much later.",
+            "what_to_observe": "Can they isolate the first sound? Do they start inventing rounds themselves?",
+            "common_mistakes": "Moving to written letters before sounds are easy. This game should be effortless first.",
+            "materials_needed": "Nothing — objects already in the room",
+            "homemade_alternative": "Free, and it works in a car, a queue or a waiting room.",
+        },
+        "ru": {
+            "title": "Игры со звуками",
+            "summary": "«Я вижу что-то, что начинается на ммм» — играется где угодно и без материалов.",
+            "why_it_matters": "Умение слышать отдельные звуки внутри слова — лучший предсказатель того, что чтение потом дастся легко. Это должно идти до букв, а не после.",
+            "how_to_present": "Используйте звук, а не название буквы. Начните только с первых звуков, держа в поле зрения два-три предмета. К последним звукам переходите намного позже.",
+            "what_to_observe": "Может ли выделить первый звук? Начинает ли сам придумывать раунды?",
+            "common_mistakes": "Переходить к написанным буквам раньше, чем звуки станут даваться легко.",
+            "materials_needed": "Ничего — предметы, которые уже в комнате",
+            "homemade_alternative": "Бесплатно и работает в машине, в очереди и в приёмной.",
+        },
+    },
+    {
+        "id": 36, "age_min_months": 24, "age_max_months": 48, "area": "language",
+        "session_minutes": 10, "mess_level": "none", "provenance": "montessori_pd",
+        "en": {
+            "title": "Three-period lesson",
+            "summary": "A precise way to teach any new word in three short steps.",
+            "why_it_matters": "It separates hearing a word, recognising it, and producing it — so a child is never asked to say something they have only just heard.",
+            "how_to_present": "One: name it. 'This is rough.' Two: ask them to find it. 'Show me rough.' Three, only much later: hold it up and ask 'What is this?' Stop at step two if step three is uncertain.",
+            "what_to_observe": "Do they succeed at step two reliably? Hesitation means stay there, not push on.",
+            "common_mistakes": "Jumping to 'what is this?' too early, turning a lesson into a test the child can fail.",
+            "materials_needed": "Any two or three contrasting objects",
+            "homemade_alternative": "Free — it is a technique, not a material, and works for anything you want to name.",
+        },
+        "ru": {
+            "title": "Трёхступенчатый урок",
+            "summary": "Точный способ ввести любое новое слово в три коротких шага.",
+            "why_it_matters": "Разделяет услышать слово, узнать его и произнести — поэтому ребёнка никогда не просят сказать то, что он только что впервые услышал.",
+            "how_to_present": "Первый: назовите. «Это шершавое». Второй: попросите найти. «Покажи шершавое». Третий, гораздо позже: поднимите предмет и спросите «Что это?». Если третий шаг неуверенный — остановитесь на втором.",
+            "what_to_observe": "Уверенно ли справляется со вторым шагом? Заминка значит остаться здесь, а не идти дальше.",
+            "common_mistakes": "Слишком рано переходить к «что это?», превращая урок в проверку, которую можно провалить.",
+            "materials_needed": "Любые два-три контрастных предмета",
+            "homemade_alternative": "Бесплатно — это приём, а не материал, и работает для чего угодно.",
+        },
+    },
+    # ---------------- Mathematics -------------------------------------------
+    {
+        "id": 37, "age_min_months": 30, "age_max_months": 54, "area": "mathematics",
+        "session_minutes": 10, "mess_level": "low", "provenance": "own_words",
+        "en": {
+            "title": "Setting the table",
+            "summary": "Laying out one plate, one cup and one fork per person.",
+            "why_it_matters": "One-to-one correspondence is the foundation of counting, and here it has a real purpose: someone will be left without a fork if it goes wrong.",
+            "how_to_present": "Count the people aloud once, then carry one item at a time. Resist carrying a stack — the trip per item is the lesson.",
+            "what_to_observe": "Do they match items to places without counting? Do they notice a missing setting?",
+            "common_mistakes": "Treating it as a chore to be done quickly rather than a maths exercise that happens to be useful.",
+            "materials_needed": "Real crockery the child can carry, a low shelf to take it from",
+            "homemade_alternative": "Already free — the trick is storing plates and cups where the child can reach them.",
+            "supervision_note": "Use small real crockery; supervise while carrying breakables until it is steady.",
+        },
+        "ru": {
+            "title": "Накрыть на стол",
+            "summary": "Разложить по одной тарелке, чашке и вилке на каждого человека.",
+            "why_it_matters": "Взаимно-однозначное соответствие — основа счёта, и здесь у него настоящая цель: если ошибиться, кто-то останется без вилки.",
+            "how_to_present": "Один раз вслух посчитайте людей, затем носите по одному предмету за раз. Не позволяйте нести стопкой — сам поход за каждым предметом и есть урок.",
+            "what_to_observe": "Соотносит ли предметы с местами, не считая? Замечает ли недостающий прибор?",
+            "common_mistakes": "Считать это обязанностью, которую надо быстро выполнить, а не математическим упражнением, которое заодно полезно.",
+            "materials_needed": "Настоящая посуда, которую ребёнок может нести, низкая полка",
+            "homemade_alternative": "Уже бесплатно — вся хитрость в том, чтобы хранить посуду в доступном месте.",
+            "supervision_note": "Используйте небольшую настоящую посуду; присматривайте, пока движения не станут уверенными.",
+        },
+    },
+    {
+        "id": 38, "age_min_months": 42, "age_max_months": 66, "area": "mathematics",
+        "session_minutes": 15, "mess_level": "none", "provenance": "montessori_pd",
+        "en": {
+            "title": "Sandpaper numerals",
+            "summary": "Numerals cut from sandpaper, traced with two fingers while saying the number.",
+            "why_it_matters": "The symbol is learned by hand and voice together, exactly as with letters — and only after the quantity it stands for is already familiar.",
+            "how_to_present": "Trace in writing direction and say the number. Three at a time. Pair each with the matching quantity of real objects.",
+            "what_to_observe": "Do they trace in the right direction? Can they match numeral to quantity?",
+            "common_mistakes": "Teaching symbols before quantities. A child who writes '5' without a felt sense of five has learned a shape, not a number.",
+            "materials_needed": "Sandpaper numerals 0-9",
+            "homemade_alternative": "Numerals cut from fine sandpaper glued to stiff card, one per card.",
+        },
+        "ru": {
+            "title": "Шершавые цифры",
+            "summary": "Цифры из наждачной бумаги, которые обводят двумя пальцами, называя число.",
+            "why_it_matters": "Символ усваивается рукой и голосом одновременно, как и буквы — и только после того, как само количество уже знакомо.",
+            "how_to_present": "Обводите в направлении письма и называйте число. По три за раз. К каждой цифре подбирайте соответствующее количество настоящих предметов.",
+            "what_to_observe": "Обводит ли в правильном направлении? Может ли соотнести цифру с количеством?",
+            "common_mistakes": "Учить символы раньше количеств. Ребёнок, который пишет «5», не чувствуя пятёрки, выучил форму, а не число.",
+            "materials_needed": "Шершавые цифры 0-9",
+            "homemade_alternative": "Цифры из мелкой наждачной бумаги, наклеенные на плотный картон, по одной на карточку.",
+        },
+    },
+    {
+        "id": 39, "age_min_months": 36, "age_max_months": 60, "area": "mathematics",
+        "session_minutes": 10, "mess_level": "low", "provenance": "own_words",
+        "en": {
+            "title": "Odd and even with counters",
+            "summary": "Laying counters in pairs to see which numbers come out level.",
+            "why_it_matters": "Makes an abstract property visible: an odd number is the one with a counter left standing alone. Nothing has to be memorised.",
+            "how_to_present": "Lay counters in two columns under each numeral. Run a finger down the middle. A leftover means odd.",
+            "what_to_observe": "Do they predict before laying them out? Do they check by pairing rather than by recall?",
+            "common_mistakes": "Telling them the rule. The material shows it more convincingly than you can.",
+            "materials_needed": "About 20 identical counters, numeral cards 1-10",
+            "homemade_alternative": "Buttons, coins or dried beans and hand-written numeral cards.",
+            "supervision_note": "Small parts — supervise with children who still mouth objects.",
+        },
+        "ru": {
+            "title": "Чётное и нечётное на фишках",
+            "summary": "Раскладывание фишек парами, чтобы увидеть, какие числа делятся поровну.",
+            "why_it_matters": "Делает абстрактное свойство видимым: нечётное число — то, где одна фишка остаётся без пары. Ничего не нужно запоминать.",
+            "how_to_present": "Разложите фишки в два столбика под каждой цифрой. Проведите пальцем посередине. Осталась лишняя — значит нечётное.",
+            "what_to_observe": "Предсказывает ли до раскладывания? Проверяет ли парами, а не по памяти?",
+            "common_mistakes": "Сообщить правило словами. Материал показывает это убедительнее, чем вы.",
+            "materials_needed": "Около 20 одинаковых фишек, карточки с цифрами 1-10",
+            "homemade_alternative": "Пуговицы, монеты или сухая фасоль и карточки с написанными от руки цифрами.",
+            "supervision_note": "Мелкие детали — присматривайте, если ребёнок ещё тянет предметы в рот.",
+        },
+    },
+    # ---------------- Grace & Courtesy ---------------------------------------
+    {
+        "id": 40, "age_min_months": 24, "age_max_months": 60, "area": "grace_and_courtesy",
+        "session_minutes": 5, "mess_level": "none", "provenance": "own_words",
+        "en": {
+            "title": "Waiting for a turn with an object",
+            "summary": "Learning that work in use is not interrupted, and that waiting is finite.",
+            "why_it_matters": "Protects concentration — both the child's own and other people's. It also replaces enforced 'sharing' with something a child can actually understand: it will be free, and then it is yours.",
+            "how_to_present": "'Anna is using it. You can have it when she has finished.' Then stay with them while they wait. Do not make the other child hand it over.",
+            "what_to_observe": "Can they wait a little longer each time? Do they check whether it is free rather than grabbing?",
+            "common_mistakes": "Timed turns. A timer interrupts the child who is concentrating, which is the opposite of the goal.",
+            "materials_needed": "Nothing",
+            "homemade_alternative": "Free — but it needs the adult to hold the boundary calmly and repeatedly.",
+        },
+        "ru": {
+            "title": "Ждать своей очереди",
+            "summary": "Понимание, что начатую работу не прерывают, и что ожидание конечно.",
+            "why_it_matters": "Защищает концентрацию — и свою, и чужую. Заодно заменяет принудительное «поделись» тем, что ребёнок действительно способен понять: предмет освободится, и тогда он твой.",
+            "how_to_present": "«Аня сейчас этим занята. Ты возьмёшь, когда она закончит». Затем побудьте рядом, пока ребёнок ждёт. Не заставляйте другого отдавать.",
+            "what_to_observe": "Может ли ждать чуть дольше каждый раз? Проверяет ли, свободен ли предмет, вместо того чтобы выхватить?",
+            "common_mistakes": "Очередь по таймеру. Таймер прерывает того, кто сосредоточен, — это противоположно цели.",
+            "materials_needed": "Ничего",
+            "homemade_alternative": "Бесплатно — но требует от взрослого спокойно и раз за разом удерживать границу.",
+        },
+    },
+    {
+        "id": 41, "age_min_months": 30, "age_max_months": 72, "area": "grace_and_courtesy",
+        "session_minutes": 5, "mess_level": "none", "provenance": "own_words",
+        "en": {
+            "title": "Greeting a visitor",
+            "summary": "Rehearsing how to open the door, greet someone and offer them a seat.",
+            "why_it_matters": "Social confidence comes from knowing the moves, not from being told to say hello. Rehearsed calmly in advance, the real moment stops being an ambush.",
+            "how_to_present": "Act it out when no one is visiting, taking turns being the visitor. Keep it short and let them play both parts.",
+            "what_to_observe": "Do they use it unprompted when someone actually arrives? Do they invent their own variations?",
+            "common_mistakes": "Prompting in the moment — 'say hello!' — which adds pressure exactly when the child is least able to handle it.",
+            "materials_needed": "Nothing",
+            "homemade_alternative": "Free, and children usually find the role-play funny, which is what makes it stick.",
+        },
+        "ru": {
+            "title": "Встретить гостя",
+            "summary": "Проигрывание того, как открыть дверь, поздороваться и предложить сесть.",
+            "why_it_matters": "Социальная уверенность возникает из знания последовательности действий, а не из требования поздороваться. Спокойно отрепетированный заранее момент перестаёт быть засадой.",
+            "how_to_present": "Разыграйте сценку, когда гостей нет, меняясь ролями. Держите коротко и дайте побыть в обеих ролях.",
+            "what_to_observe": "Использует ли это сам, когда кто-то действительно приходит? Придумывает ли свои варианты?",
+            "common_mistakes": "Подсказывать в момент встречи — «поздоровайся!» — это давит именно тогда, когда ребёнку труднее всего.",
+            "materials_needed": "Ничего",
+            "homemade_alternative": "Бесплатно, и детям обычно смешно играть роли — именно поэтому запоминается.",
+        },
+    },
+    # ---------------- Art & Music --------------------------------------------
+    {
+        "id": 42, "age_min_months": 24, "age_max_months": 60, "area": "art_and_music",
+        "session_minutes": 20, "mess_level": "high", "provenance": "own_words",
+        "en": {
+            "title": "Painting at an easel",
+            "summary": "One or two colours, a standing easel, and an apron the child puts on themselves.",
+            "why_it_matters": "Standing frees the whole arm, so painting is a movement exercise as much as an art one. Limiting the colours keeps it about the mark rather than about mixing mud.",
+            "how_to_present": "Show how to load the brush and wipe it on the jar rim. Two colours at most to begin with.",
+            "what_to_observe": "Do they use the whole arm? Do they wipe the brush? Do they paint over or beside earlier marks?",
+            "common_mistakes": "Offering every colour at once. Everything becomes brown and the child stops.",
+            "materials_needed": "Easel, thick paper, two paints, one brush, apron on a low hook",
+            "homemade_alternative": "Paper taped to a wall or the side of a bath, with a washable mat underneath.",
+            "supervision_note": "Non-toxic paint; supervise near water jars.",
+        },
+        "ru": {
+            "title": "Рисование на мольберте",
+            "summary": "Один-два цвета, мольберт стоя и фартук, который ребёнок надевает сам.",
+            "why_it_matters": "Положение стоя освобождает всю руку, поэтому рисование становится не меньше упражнением на движение, чем на творчество. Ограничение цветов сохраняет внимание к самому следу.",
+            "how_to_present": "Покажите, как набрать краску и отжать кисть о край банки. Для начала не больше двух цветов.",
+            "what_to_observe": "Работает ли вся рука? Отжимает ли кисть? Рисует поверх прежних следов или рядом?",
+            "common_mistakes": "Давать сразу все цвета. Всё становится бурым, и ребёнок теряет интерес.",
+            "materials_needed": "Мольберт, плотная бумага, две краски, кисть, фартук на низком крючке",
+            "homemade_alternative": "Бумага, приклеенная к стене или борту ванны, и моющийся коврик снизу.",
+            "supervision_note": "Нетоксичные краски; присматривайте рядом с банками с водой.",
+        },
+    },
+    {
+        "id": 43, "age_min_months": 30, "age_max_months": 66, "area": "art_and_music",
+        "session_minutes": 10, "mess_level": "none", "provenance": "own_words",
+        "en": {
+            "title": "Silence game",
+            "summary": "Sitting together in complete stillness, listening for the smallest sound.",
+            "why_it_matters": "Silence is treated as something you make, not something imposed. Children find it genuinely exciting, and it sharpens hearing and self-control at once.",
+            "how_to_present": "Sit, close eyes, and be still together. Start with ten seconds. Afterwards, ask what they heard.",
+            "what_to_observe": "How long can they hold it? What do they notice — a clock, a bird, their own breathing?",
+            "common_mistakes": "Using it as a punishment or to quiet a room. That destroys it permanently.",
+            "materials_needed": "Nothing",
+            "homemade_alternative": "Free, and it works best somewhere with faint background sounds to discover.",
+        },
+        "ru": {
+            "title": "Игра в тишину",
+            "summary": "Сидеть вместе в полной неподвижности и вслушиваться в самые тихие звуки.",
+            "why_it_matters": "Тишина здесь — это то, что создают, а не то, что навязывают. Детям это по-настоящему интересно, и одновременно тренируется слух и самообладание.",
+            "how_to_present": "Сядьте, закройте глаза и замрите вместе. Начните с десяти секунд. Потом спросите, что он услышал.",
+            "what_to_observe": "Сколько времени удерживает? Что замечает — часы, птицу, собственное дыхание?",
+            "common_mistakes": "Использовать как наказание или способ утихомирить комнату. Это разрушает игру навсегда.",
+            "materials_needed": "Ничего",
+            "homemade_alternative": "Бесплатно и лучше всего работает там, где есть тихие фоновые звуки, которые можно обнаружить.",
+        },
+    },
+    # ---------------- Culture & Nature ---------------------------------------
+    {
+        "id": 44, "age_min_months": 30, "age_max_months": 72, "area": "culture_and_nature",
+        "session_minutes": 20, "mess_level": "high", "provenance": "own_words",
+        "en": {
+            "title": "Growing something from seed",
+            "summary": "Planting a fast-growing seed in a clear jar and watching the roots.",
+            "why_it_matters": "Compresses a natural process into a few weeks and makes the hidden part — the roots — visible. It also asks for patience with a visible payoff.",
+            "how_to_present": "Line a jar with damp paper, tuck a bean against the glass, and check it together each morning. Say little; the change speaks.",
+            "what_to_observe": "Do they check unprompted? Do they notice the root before the shoot?",
+            "common_mistakes": "Choosing a slow seed. Beans show something within days, which matches a young child's sense of time.",
+            "materials_needed": "Clear jar, paper towel, a dried bean, water",
+            "homemade_alternative": "Entirely free — a bean from the kitchen cupboard usually sprouts.",
+            "supervision_note": "Check that the seed chosen is edible and not a treated or ornamental variety.",
+        },
+        "ru": {
+            "title": "Вырастить растение из семени",
+            "summary": "Посадить быстрорастущее семя в прозрачную банку и наблюдать за корнями.",
+            "why_it_matters": "Сжимает природный процесс до нескольких недель и делает скрытую часть — корни — видимой. Заодно требует терпения с наглядным результатом.",
+            "how_to_present": "Выстелите банку влажной бумагой, вложите фасолину к стенке и проверяйте вместе каждое утро. Говорите мало — изменения говорят сами.",
+            "what_to_observe": "Подходит ли проверять без напоминания? Замечает ли корень раньше ростка?",
+            "common_mistakes": "Выбрать медленное семя. Фасоль показывает результат за несколько дней, что соответствует детскому ощущению времени.",
+            "materials_needed": "Прозрачная банка, бумажное полотенце, сухая фасолина, вода",
+            "homemade_alternative": "Полностью бесплатно — фасоль из кухонного шкафа обычно прорастает.",
+            "supervision_note": "Убедитесь, что семя пищевое, а не протравленное или декоративное.",
+        },
+    },
+    {
+        "id": 45, "age_min_months": 36, "age_max_months": 72, "area": "culture_and_nature",
+        "session_minutes": 15, "mess_level": "low", "provenance": "own_words",
+        "en": {
+            "title": "Land and water tray",
+            "summary": "A tray divided into land and water, showing island, lake, peninsula and bay.",
+            "why_it_matters": "Geography begins as something you can pour water into and touch, long before a map means anything.",
+            "how_to_present": "Build one form, pour the water slowly, and name it once. Add a second form only when the first is familiar.",
+            "what_to_observe": "Do they pour carefully? Do they use the name when they see it elsewhere — in a book, from a window?",
+            "common_mistakes": "Making all the forms at once, which turns a clear contrast into a jumble.",
+            "materials_needed": "Shallow tray, modelling clay, a small jug of water, blue food colouring",
+            "homemade_alternative": "A baking tray and plasticine works exactly as well as a bought set.",
+            "supervision_note": "Supervise around standing water.",
+        },
+        "ru": {
+            "title": "Поднос «суша и вода»",
+            "summary": "Поднос, разделённый на сушу и воду: остров, озеро, полуостров, залив.",
+            "why_it_matters": "География начинается с того, во что можно налить воду и что можно потрогать, задолго до того, как карта начнёт что-то значить.",
+            "how_to_present": "Сделайте одну форму, медленно налейте воду и один раз назовите её. Вторую форму добавляйте, только когда первая станет знакомой.",
+            "what_to_observe": "Аккуратно ли наливает? Использует ли название, встретив форму в книге или за окном?",
+            "common_mistakes": "Сделать все формы сразу — тогда ясный контраст превращается в кашу.",
+            "materials_needed": "Неглубокий поднос, пластилин, кувшинчик воды, синий пищевой краситель",
+            "homemade_alternative": "Противень и пластилин работают ровно так же, как покупной набор.",
+            "supervision_note": "Присматривайте рядом со стоячей водой.",
+        },
+    },
 ]
 
 # --- Sensitive periods -------------------------------------------------------
@@ -1021,8 +1415,21 @@ def _validate() -> None:
                 _require(p[loc].get(field), f"period {pid} [{loc}]: missing {field}")
 
 
+def _load_image_credits() -> dict[int, dict]:
+    """Image metadata recorded by tools/fetch_images.py, keyed by activity id.
+
+    Absent by design until images are sourced — the app falls back to the
+    curriculum-area tile, so a missing file here is not an error.
+    """
+    if not IMAGE_CREDITS_PATH.exists():
+        return {}
+    raw = json.loads(IMAGE_CREDITS_PATH.read_text(encoding="utf-8"))
+    return {int(k): v for k, v in raw.items() if not k.startswith("_")}
+
+
 def build_seed() -> dict:
     _validate()
+    credits = _load_image_credits()
 
     activities = [
         {
@@ -1034,9 +1441,9 @@ def build_seed() -> dict:
             "sessionMinutes": a["session_minutes"],
             "messLevel": a["mess_level"],
             "provenance": a["provenance"],
-            "imageAsset": a.get("image_asset"),
-            "imageCredit": a.get("image_credit"),
-            "imageLicence": a.get("image_licence"),
+            "imageAsset": credits.get(a["id"], {}).get("imageAsset"),
+            "imageCredit": credits.get(a["id"], {}).get("imageCredit"),
+            "imageLicence": credits.get(a["id"], {}).get("imageLicence"),
         }
         for a in ACTIVITIES
     ]
@@ -1110,6 +1517,16 @@ def main() -> None:
     missing = [a for a in AREAS if a not in by_area]
     if missing:
         print(f"  WARNING: areas with no activities: {', '.join(missing)}")
+
+    with_images = sum(1 for a in seed["activities"] if a["imageAsset"])
+    print(f"  images: {with_images}/{len(seed['activities'])} "
+          f"(the rest show their curriculum-area tile)")
+    uncredited = [
+        a["id"] for a in seed["activities"] if a["imageAsset"] and not a["imageCredit"]
+    ]
+    if uncredited:
+        print(f"  ERROR: images without a credit: {uncredited} — "
+              f"re-run tools/fetch_images.py rather than shipping these")
 
 
 if __name__ == "__main__":

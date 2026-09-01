@@ -30,4 +30,18 @@ object PythonBridge {
         val resultJson = bridgeModule().callAttr("rotation_status_json", payload).toString()
         return json.decodeFromString(resultJson)
     }
+
+    /** Null when the child has no eligible activities — Python returns JSON
+     *  null, which decodes straight to a Kotlin null. */
+    fun dailyFocus(request: DailyFocusRequest): RecommendedActivityResult? {
+        val payload = json.encodeToString(request)
+        val resultJson = bridgeModule().callAttr("daily_focus_json", payload).toString()
+        return json.decodeFromString(resultJson)
+    }
+
+    fun upcomingChanges(request: UpcomingChangesRequest): UpcomingChangesResult {
+        val payload = json.encodeToString(request)
+        val resultJson = bridgeModule().callAttr("upcoming_changes_json", payload).toString()
+        return json.decodeFromString(resultJson)
+    }
 }

@@ -131,6 +131,27 @@ its own copy of the Python interpreter, so don't add ABIs you don't ship.
 
 ---
 
+## Languages
+
+English and Russian, switchable in-app from the globe icon in the child list —
+System default / English / Русский. The choice is stored in SharedPreferences
+and applied in `MainActivity.attachBaseContext`, which is why it must be
+readable synchronously (DataStore would be wrong here).
+
+One switch changes **both** layers: UI strings come from `values/` and
+`values-ru/`, while activity text comes from the `activity_texts` table keyed
+by locale. `withAppLanguage()` sets the process default locale, and
+`ContentRepository` reads `Locale.getDefault()`, so content follows the UI
+without separate plumbing. Content falls back to English field-by-field, so a
+partial translation degrades gracefully rather than rendering blank.
+
+Changing the language recreates the activity — the locale is baked into the
+Context's Resources, so already-composed strings and already-loaded rows would
+otherwise keep the old language.
+
+**The Russian is a first pass and needs a native review before release.** The
+pedagogical text in particular is words a parent will say to their child.
+
 ## Architecture
 
 ```

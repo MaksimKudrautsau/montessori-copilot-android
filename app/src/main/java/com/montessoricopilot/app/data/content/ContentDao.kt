@@ -130,6 +130,22 @@ interface ContentDao {
     )
     suspend fun getActivePeriodNames(locale: String, ageMonths: Int): List<PeriodNames>
 
+    /** As [getActivePeriodNames] but for every period regardless of age —
+     *  used when translating period names that came back from the matcher
+     *  for a *future* age, which by definition isn't active yet. */
+    @Query(
+        """
+        SELECT p.id AS id,
+               en.name AS nameEn,
+               COALESCE(loc.name, en.name) AS nameLocalized
+        FROM sensitive_periods p
+        JOIN sensitive_period_texts en ON en.periodId = p.id AND en.locale = 'en'
+        LEFT JOIN sensitive_period_texts loc ON loc.periodId = p.id AND loc.locale = :locale
+        ORDER BY p.ageMinMonths
+        """
+    )
+    suspend fun getAllPeriodNames(locale: String): List<PeriodNames>
+
     // --- Seeding check ------------------------------------------------------
 
     @Query("SELECT COUNT(*) FROM activities")

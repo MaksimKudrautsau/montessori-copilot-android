@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--
+      The ONLY permission this app declares. Notably absent: INTERNET.
+      Nothing about a child ever leaves the device (PRD v0.5 §11), and the
+      weekly reminder is generated locally from the on-device database.
+      Required from API 33; on older versions notifications need no permission.
+    -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:name=".MontessoriApp"
         android:allowBackup="true"

@@ -24,11 +24,49 @@
     <string name="tab_journal">Journal</string>
     <string name="tab_shelf">Shelf</string>
     <string name="back_to_children">Back to children</string>
+    <string name="back">Back</string>
+    <string name="attributions">Settings &amp; credits</string>
+
+    <!-- Language switcher. The two language names are intentionally NOT
+         translated: a person looking for Russian should see "Русский"
+         whatever language the app is currently showing. -->
+    <string name="language">Language</string>
+    <string name="language_system">System default</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_russian" translatable="false">Русский</string>
+
+    <!-- Attributions -->
+    <string name="attributions_title">Settings &amp; credits</string>
+    <string name="attributions_content_heading">Where this content comes from</string>
+    <string name="attributions_content_body">Activities are either written for this app from general knowledge of the Montessori method, or drawn from Maria Montessori\'s own published works, which are in the public domain. Each activity shows its source at the bottom of its page.</string>
+    <string name="attributions_images_heading">Image credits</string>
+    <string name="attributions_no_images">No photographs are included yet. Activities currently show an illustrated tile for their curriculum area.</string>
+    <string name="source_label">Source: %1$s</string>
+    <string name="image_credit_label">Image: %1$s</string>
 
     <!-- Today -->
     <string name="today_header">%1$s · %2$d months</string>
     <string name="active_sensitive_periods">Active sensitive periods</string>
+    <string name="todays_focus">Today\'s focus</string>
+    <string name="more_ideas">More ideas</string>
     <string name="suggested_activities">Suggested activities</string>
+
+    <!-- Upcoming monthly milestone -->
+    <string name="milestone_today">%1$s turns %2$d months today</string>
+    <string name="milestone_tomorrow">%1$s turns %2$d months tomorrow</string>
+    <string name="milestone_in_days">%1$s turns %2$d months in %3$d days</string>
+    <string name="milestone_new_activities">New activities become suitable</string>
+    <string name="milestone_periods_starting">Beginning: %1$s</string>
+    <string name="milestone_periods_ending">Easing off: %1$s</string>
+
+    <!-- Weekly reminder notification -->
+    <string name="notification_channel_name">Weekly reminder</string>
+    <string name="notification_channel_description">One quiet reminder a week about shelf rotation and what is changing for your child.</string>
+    <string name="notification_rotation_title">Time to refresh the shelf</string>
+    <string name="notification_milestone_title">Something is changing this week</string>
+    <string name="weekly_reminder">Weekly reminder</string>
+    <string name="weekly_reminder_on">Weekly reminder is on</string>
+    <string name="weekly_reminder_off">Weekly reminder is off</string>
     <string name="supports_sensitive_period">Supports the current sensitive period for %1$s</string>
     <string name="action_not_now">Not now</string>
     <plurals name="items_due_for_rotation">
@@ -38,6 +76,7 @@
 
     <!-- Library -->
     <string name="search_activities">Search activities</string>
+    <string name="no_activities_match">No activities match. Try a different area or search term.</string>
     <string name="materials_label">Materials: %1$s</string>
     <string name="age_range_months">%1$d–%2$d months</string>
     <string name="session_minutes">About %1$d min</string>

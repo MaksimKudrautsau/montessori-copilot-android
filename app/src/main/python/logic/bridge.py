@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 
+from .daily import daily_focus, upcoming_changes
 from .recommendation import recommend
 from .rotation import rotation_status
 
@@ -51,5 +52,47 @@ def rotation_status_json(payload_json: str) -> str:
         shelf_items=payload["shelf_items"],
         today_epoch_day=payload["today_epoch_day"],
         **kwargs,
+    )
+    return json.dumps(result)
+
+
+def daily_focus_json(payload_json: str) -> str:
+    """payload: {
+        "child_id": int,
+        "day_number": int,          # LocalDate.toEpochDay()
+        "child_age_months": int,
+        "activities": [activity dict, ...],
+        "dismissed_ids": [int, ...],
+        "active_period_names": [str, ...]
+    }
+    returns: JSON object for the chosen activity, or "null" if none is eligible.
+    """
+    payload = json.loads(payload_json)
+    result = daily_focus(
+        child_id=payload["child_id"],
+        day_number=payload["day_number"],
+        child_age_months=payload["child_age_months"],
+        activities=payload["activities"],
+        dismissed_ids=payload.get("dismissed_ids", []),
+        active_period_names=payload.get("active_period_names", []),
+    )
+    return json.dumps(result)
+
+
+def upcoming_changes_json(payload_json: str) -> str:
+    """payload: {
+        "current_age_months": int,
+        "next_age_months": int,
+        "activities": [activity dict, ...],
+        "periods": [{"name", "age_min_months", "age_max_months"}, ...]
+    }
+    returns: JSON object describing what changes at the milestone.
+    """
+    payload = json.loads(payload_json)
+    result = upcoming_changes(
+        current_age_months=payload["current_age_months"],
+        next_age_months=payload["next_age_months"],
+        activities=payload["activities"],
+        periods=payload["periods"],
     )
     return json.dumps(result)

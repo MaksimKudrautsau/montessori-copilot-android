@@ -1,5 +1,6 @@
 [tool.pytest.ini_options]
-# Lets `import logic...` resolve straight from the Chaquopy source dir,
-# without needing Android/Gradle to run these tests.
-pythonpath = ["app/src/main/python"]
+# "." puts the project root on sys.path so `tools.*` imports resolve no matter
+# which directory pytest is invoked from; the second entry lets tests import
+# `logic.*` straight from the Chaquopy source dir without Android or Gradle.
+pythonpath = [".", "app/src/main/python"]
 testpaths = ["tests"]
